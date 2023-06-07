@@ -45,9 +45,11 @@ class _VideoPlayersState extends State<VideoPlayers> {
 
   void _playVideo() {
     if (_controller.value.isPlaying) {
+      position = _controller.value.position;
       _controller.pause();
       _controller.seekTo(position);
     } else {
+      position = _controller.value.position;
       _controller.seekTo(position);
       _controller.play();
     }
@@ -63,7 +65,6 @@ class _VideoPlayersState extends State<VideoPlayers> {
   void _seekForward() {
     position = _controller.value.position + Duration(seconds: 10);
 
-    print(position);
     _controller.seekTo(position);
     setState(() {});
   }
@@ -75,11 +76,10 @@ class _VideoPlayersState extends State<VideoPlayers> {
   }
 
   void _onSliderChanged(double value) {
-    position =
-        _controller.value.position + Duration(milliseconds: value.toInt());
-    print("My Position $position");
-
     setState(() {
+      position =
+          _controller.value.position + Duration(milliseconds: value.toInt());
+
       _controller.seekTo(position);
       _sliderValue = value;
     });
@@ -97,9 +97,10 @@ class _VideoPlayersState extends State<VideoPlayers> {
   }
 
   void _changeVolume(double value) {
+    print(value);
     setState(() {
       _volumeValue = value;
-      _controller.setVolume(value);
+      _controller.setVolume(_volumeValue);
     });
   }
 
@@ -247,6 +248,9 @@ class _VideoPlayersState extends State<VideoPlayers> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        SizedBox(
+                          width: 60,
+                        ),
                         Expanded(
                             child: InkWell(
                           onDoubleTap: () {
@@ -271,6 +275,9 @@ class _VideoPlayersState extends State<VideoPlayers> {
                           ),
                         ),
                         SizedBox(
+                          width: 60,
+                        ),
+                        SizedBox(
                           height: 600,
                         )
                       ],
@@ -288,97 +295,141 @@ class _VideoPlayersState extends State<VideoPlayers> {
                     future: _initializeVideoPlayerFuture,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
-                        return Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    isshowbar = !isshowbar;
-                                  });
-                                  print(isshowbar);
-                                },
-                                child: VideoPlayer(_controller)),
-                            VideoProgressIndicator(
-                              _controller,
-                              allowScrubbing: true,
-                              colors: VideoProgressColors(
-                                playedColor: Colors.green,
-                                bufferedColor: Colors.grey,
+                        return SizedBox(
+                          height: 250,
+                          child: Stack(
+                            alignment: Alignment.bottomCenter,
+                            children: [
+                              InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      isshowbar = !isshowbar;
+                                    });
+                                    print(isshowbar);
+                                  },
+                                  child: VideoPlayer(_controller)),
+                              VideoProgressIndicator(
+                                _controller,
+                                allowScrubbing: true,
+                                colors: VideoProgressColors(
+                                  playedColor: Colors.green,
+                                  bufferedColor: Colors.grey,
+                                ),
                               ),
-                            ),
-                            Positioned(
-                              right: 1,
-                              // top: 1,
-                              child: SizedBox(
-                                height: 190,
-                                child: isshowbar
-                                    ? Column(
-                                        children: [
-                                          RotatedBox(
-                                              quarterTurns: 3,
-                                              child: SliderTheme(
-                                                data: const SliderThemeData(
-                                                  overlayShape:
-                                                      RoundSliderOverlayShape(
-                                                          overlayRadius: 10.0),
-                                                  tickMarkShape:
-                                                      RoundSliderTickMarkShape(
-                                                          tickMarkRadius: 2.0),
-                                                  thumbShape:
-                                                      RoundSliderThumbShape(
-                                                    enabledThumbRadius: 4.0,
+                              Positioned(
+                                right: 1,
+                                // top: 1,
+                                child: SizedBox(
+                                  height: 190,
+                                  child: isshowbar
+                                      ? Column(
+                                          children: [
+                                            RotatedBox(
+                                                quarterTurns: 3,
+                                                child: SliderTheme(
+                                                  data: const SliderThemeData(
+                                                    overlayShape:
+                                                        RoundSliderOverlayShape(
+                                                            overlayRadius:
+                                                                10.0),
+                                                    tickMarkShape:
+                                                        RoundSliderTickMarkShape(
+                                                            tickMarkRadius:
+                                                                2.0),
+                                                    thumbShape:
+                                                        RoundSliderThumbShape(
+                                                      enabledThumbRadius: 4.0,
+                                                    ),
                                                   ),
-                                                ),
-                                                child: Slider(
-                                                  value: _volumeValue,
-                                                  min: 0.0,
-                                                  max: 2.0,
-                                                  onChanged: _changeVolume,
-                                                  label: "Volume",
-                                                ),
-                                              )),
-                                          Icon(Icons.volume_up,
-                                              color: primaryColor1, size: 15),
+                                                  child: Slider(
+                                                    value: _volumeValue,
+                                                    min: 0.0,
+                                                    max: 2.0,
+                                                    onChanged: _changeVolume,
+                                                    label: "Volume",
+                                                  ),
+                                                )),
+                                            Icon(Icons.volume_up,
+                                                color: primaryColor1, size: 15),
+                                          ],
+                                        )
+                                      : null,
+                                ),
+                              ),
+                              SizedBox(
+                                child: isshowbar
+                                    ? Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          IconButton(
+                                            color: primaryColor1,
+                                            onPressed: _seekBackward,
+                                            icon: Icon(Icons.replay_10),
+                                          ),
+                                          IconButton(
+                                            onPressed: _playVideo,
+                                            icon: Icon(
+                                              _controller.value.isPlaying
+                                                  ? Icons.pause
+                                                  : Icons.play_arrow,
+                                              color: primaryColor1,
+                                            ),
+                                          ),
+                                          IconButton(
+                                            onPressed: _seekForward,
+                                            color: primaryColor1,
+                                            icon: Icon(Icons.forward_10),
+                                          ),
+                                          IconButton(
+                                              color: primaryColor1,
+                                              onPressed: _toggleFullScreen,
+                                              icon: Icon(Icons.fullscreen)),
                                         ],
                                       )
                                     : null,
                               ),
+                              Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(
+                          width: 60,
+                        ),
+                        Expanded(
+                            child: InkWell(
+                          onDoubleTap: () {
+                            _seekBackward();
+                          },
+                          child: Container(
+                            height: 150,
+                            width: 150,
+                            // color: primaryColor1,
+                          ),
+                        )),
+                        Expanded(
+                          child: InkWell(
+                            onDoubleTap: () {
+                              _seekForward();
+                            },
+                            child: Container(
+                              height: 150,
+                              width: 150,
+                              // color: primaryColor2,
                             ),
-                            SizedBox(
-                              child: isshowbar
-                                  ? Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        IconButton(
-                                          color: primaryColor1,
-                                          onPressed: _seekBackward,
-                                          icon: Icon(Icons.replay_10),
-                                        ),
-                                        IconButton(
-                                          onPressed: _playVideo,
-                                          icon: Icon(
-                                            _controller.value.isPlaying
-                                                ? Icons.pause
-                                                : Icons.play_arrow,
-                                            color: primaryColor1,
-                                          ),
-                                        ),
-                                        IconButton(
-                                          onPressed: _seekForward,
-                                          color: primaryColor1,
-                                          icon: Icon(Icons.forward_10),
-                                        ),
-                                        IconButton(
-                                            color: primaryColor1,
-                                            onPressed: _toggleFullScreen,
-                                            icon: Icon(Icons.fullscreen)),
-                                      ],
-                                    )
-                                  : null,
-                            ),
-                          ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: 60,
+                        ),
+                        SizedBox(
+                          height: 600,
+                        )
+                      ],
+                    ),
+                            ],
+                          ),
                         );
                       } else {
                         return Center(
