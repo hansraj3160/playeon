@@ -29,109 +29,22 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   int currentIndex = 0;
   String? categoryController;
-  List<String> categoryList = [
-    "Action",
-    "Trending now",
-    "Anime",
-    "Sci-Fi",
-    "Kids Cartoon",
-    "Romantic",
-    "Horror",
-    "Adventure",
-    "Animated Movies"
-  ];
-  List<String> imagefor = [
-    "assets/images/for1.png",
-    "assets/images/for2.png",
-    "assets/images/for3.png",
-    "assets/images/for4.png",
-    "assets/images/img_hotel.png",
-    "assets/images/img_hostile.png",
-  ];
+  List<MoviesModel> categoryList = [];
+  List<MoviesModel> imagefor = [];
 
-  List<String> imagecontinue = [
-    "assets/images/cont1.png",
-    "assets/images/cont2.png",
-    "assets/images/cont3.png",
-    "assets/images/for4.png",
-    "assets/images/img_hotel.png",
-    "assets/images/img_hostile.png",
-  ];
-  List<String> Action = [
-    "assets/images/act1.png",
-    "assets/images/act2.png",
-    "assets/images/act3.png",
-    "assets/images/for4.png",
-    "assets/images/img_hotel.png",
-    "assets/images/img_hostile.png",
-  ];
+  List<MoviesModel> dramasList = [];
+  List<MoviesModel> actionList = [];
 
-  List<String> trend = [
-    "assets/images/trend1.png",
-    "assets/images/trend2.png",
-    "assets/images/trend3.png",
-    "assets/images/trend4.png",
-    "assets/images/img_hotel.png",
-    "assets/images/img_hostile.png",
-  ];
-  List<String> Anime = [
-    "assets/images/ani1.png",
-    "assets/images/ani2.png",
-    "assets/images/ani3.png",
-    "assets/images/ani4.png",
-    "assets/images/img_hotel.png",
-    "assets/images/img_hostile.png",
-  ];
-  List<String> Sci = [
-    "assets/images/sci1.png",
-    "assets/images/sci2.png",
-    "assets/images/sci3.png",
-    "assets/images/sci4.png",
-    "assets/images/img_hotel.png",
-    "assets/images/img_hostile.png",
-  ];
+  List<MoviesModel> thrillerList = [];
+  List<MoviesModel> romanticList = [];
+  List<MoviesModel> Sci = [];
 
-  List<String> kid = [
-    "assets/images/kid1.png",
-    "assets/images/kid2.png",
-    "assets/images/kid3.png",
-    "assets/images/kid4.png",
-    "assets/images/img_hotel.png",
-    "assets/images/img_hostile.png",
-  ];
-  List<String> rom = [
-    "assets/images/rom1.png",
-    "assets/images/rom2.png",
-    "assets/images/rom3.png",
-    "assets/images/rom4.png",
-    "assets/images/img_hotel.png",
-    "assets/images/img_hostile.png",
-  ];
-  List<String> Horror = [
-    "assets/images/hor1.png",
-    "assets/images/hor2.png",
-    "assets/images/hor3.png",
-    "assets/images/hor4.png",
-    "assets/images/img_hotel.png",
-    "assets/images/img_hostile.png",
-  ];
+  List<MoviesModel> crimeList = [];
+  List<MoviesModel> comediesList = [];
+  List<MoviesModel> horror = [];
 
-  List<String> adv = [
-    "assets/images/adv1.png",
-    "assets/images/adv2.png",
-    "assets/images/adv3.png",
-    "assets/images/adv4.png",
-    "assets/images/img_hotel.png",
-    "assets/images/img_hostile.png",
-  ];
-  List<String> animat = [
-    "assets/images/animat1.png",
-    "assets/images/animat2.png",
-    "assets/images/animat3.png",
-    "assets/images/animat4.png",
-    "assets/images/img_hotel.png",
-    "assets/images/img_hostile.png",
-  ];
+  List<MoviesModel> adv = [];
+  List<MoviesModel> animat = [];
   List<MoviesModel> moviesData = [];
   List<MoviesModel> categories = [];
   List<String> categorieslist = [];
@@ -150,8 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
     LocalPreference prefs = LocalPreference();
     String token = await prefs.getUserToken();
     var response = await ApiController().getMovies(token);
-
-    print(" form api $response");
+//
+    // print(" form api $response");
     for (var item in response) {
       moviesData.add(MoviesModel.fromJson(item));
     }
@@ -164,6 +77,14 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     getMovies();
     getCategories();
+    sciFic();
+    horrorMovies();
+    thriller();
+    horrorMovies();
+    action();
+    romance();
+    dramas();
+    comedries();
     super.initState();
   }
 
@@ -179,12 +100,11 @@ class _HomeScreenState extends State<HomeScreen> {
       dynamic genre = item['genre'][0];
       if (genre is List<dynamic> && genre.isNotEmpty) {
         var m = genre;
-        print("Genre ${m[0]}");
+
         addUniqueItem(m[0]);
       } else {
         print('Invalid genre');
       }
-      // categorieslist.add(item['genre'][0]);
     }
     setLoading(false);
   }
@@ -192,10 +112,101 @@ class _HomeScreenState extends State<HomeScreen> {
   void addUniqueItem(String item) {
     if (!categorieslist.contains(item)) {
       categorieslist.add(item);
-      print('Item added: $item');
+      // print('Item added: $item');
     } else {
-      print('Item already exists: $item');
+      // print('Item already exists: $item');
     }
+  }
+
+  //Categories data
+
+  sciFic() async {
+    setLoading(true);
+    LocalPreference prefs = LocalPreference();
+    String token = await prefs.getUserToken();
+    var response = await ApiController().getCategories(token, "sci-fi");
+    for (var item in response) {
+      Sci.add(MoviesModel.fromJson(item));
+    }
+    setLoading(false);
+  }
+
+  thriller() async {
+    setLoading(true);
+    LocalPreference prefs = LocalPreference();
+    String token = await prefs.getUserToken();
+    var response = await ApiController().getCategories(token, "thriller");
+    for (var item in response) {
+      thrillerList.add(MoviesModel.fromJson(item));
+    }
+    setLoading(false);
+  }
+
+  action() async {
+    setLoading(true);
+    LocalPreference prefs = LocalPreference();
+    String token = await prefs.getUserToken();
+    var response = await ApiController().getCategories(token, "action");
+    for (var item in response) {
+      actionList.add(MoviesModel.fromJson(item));
+    }
+    setLoading(false);
+  }
+
+  romance() async {
+    setLoading(true);
+    LocalPreference prefs = LocalPreference();
+    String token = await prefs.getUserToken();
+    var response = await ApiController().getCategories(token, "romance");
+    for (var item in response) {
+      romanticList.add(MoviesModel.fromJson(item));
+    }
+    setLoading(false);
+  }
+
+  dramas() async {
+    setLoading(true);
+    LocalPreference prefs = LocalPreference();
+    String token = await prefs.getUserToken();
+    var response = await ApiController().getCategories(token, "dramas");
+    for (var item in response) {
+      dramasList.add(MoviesModel.fromJson(item));
+    }
+    setLoading(false);
+  }
+
+  crime() async {
+    setLoading(true);
+    LocalPreference prefs = LocalPreference();
+    String token = await prefs.getUserToken();
+    var response = await ApiController().getCategories(token, "crime");
+    for (var item in response) {
+      crimeList.add(MoviesModel.fromJson(item));
+    }
+    setLoading(false);
+  }
+
+  horrorMovies() async {
+    setLoading(true);
+    LocalPreference prefs = LocalPreference();
+    String token = await prefs.getUserToken();
+    var response = await ApiController().getCategories(token, "horror");
+    for (var item in response) {
+      horror.add(MoviesModel.fromJson(item));
+    }
+    setLoading(false);
+  }
+
+  comedries() async {
+    setLoading(true);
+    LocalPreference prefs = LocalPreference();
+    String token = await prefs.getUserToken();
+    var response = await ApiController().getCategories(token, "comedies");
+    print("Response in comedies ${response}");
+    for (var item in response) {
+      comediesList.add(MoviesModel.fromJson(item));
+    }
+    setLoading(false);
   }
 
   List listItem = ["Item 1", "Item 2"];
@@ -331,7 +342,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: 10,
+                  height: size.height * 0.03,
                 ),
                 Row(
                   children: [
@@ -396,9 +407,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                           )));
                                 },
                                 child: Container(
-                                    padding: EdgeInsets.only(right: 10),
-                                    child: Image.network(
-                                        moviesData[index].imgSmPoster!)),
+                                    height: size.height * 0.08,
+                                    width: size.width * 0.3,
+                                    padding: EdgeInsets.only(left: 10),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(
+                                          moviesData[index].imgSmPoster!,
+                                          fit: BoxFit.fill),
+                                    )),
                               );
                             }),
                       )
@@ -406,7 +426,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: size.height * 0.03,
                 ),
                 Row(
                   children: [
@@ -425,7 +445,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           SwipeLeftAnimationRoute(
                               milliseconds: 300,
                               widget: ShowAllMovies(
-                                  showList: moviesData,
+                                  showList: dramasList,
                                   title: " Continue Watching"))),
                       child: Row(
                         children: [
@@ -448,33 +468,49 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Container(
                   width: size.width,
-                  height: size.height * 0.18,
+                  height: size.height * 0.22,
                   padding: EdgeInsets.symmetric(
                       vertical: size.height * verticalPadding),
                   child: Row(
                     children: [
                       Expanded(
-                        child: GridView.builder(
-                            itemCount: imagecontinue.length,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 1,
-                              crossAxisSpacing: size.width * 0.011,
-                              mainAxisSpacing: size.height * 0.0001,
-                              //childAspectRatio: 0.63,
-                              childAspectRatio:
-                                  size.width / (size.height * 0.50),
-                            ),
+                        child: ListView.builder(
+                            itemCount: thrillerList.length,
                             shrinkWrap: false,
                             scrollDirection: Axis.horizontal,
                             physics: ScrollPhysics(),
                             itemBuilder: (_, index) {
-                              return Container(
-                                  child: Image.asset(imagecontinue[index]));
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      SwipeLeftAnimationRoute(
+                                          milliseconds: 200,
+                                          widget: About(
+                                            movieData: thrillerList[index],
+                                          )));
+                                },
+                                child: Container(
+                                    height: size.height * 0.1,
+                                    width: size.width * 0.3,
+                                    padding: EdgeInsets.only(left: 10),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(
+                                          thrillerList[index].imgSmPoster!,
+                                          fit: BoxFit.cover),
+                                    )),
+                              );
                             }),
                       )
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: size.height * 0.03,
                 ),
                 Row(
                   children: [
@@ -493,7 +529,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           SwipeLeftAnimationRoute(
                               milliseconds: 300,
                               widget: ShowAllMovies(
-                                  showList: moviesData,
+                                  showList: actionList,
                                   title: "Action Movies"))),
                       child: Row(
                         children: [
@@ -519,30 +555,54 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Container(
                   width: size.width,
-                  height: size.height * 0.18,
+                  height: size.height * 0.22,
                   child: Row(
                     children: [
                       Expanded(
                         child: ListView.builder(
-                            itemCount: Action.length,
+                            itemCount: actionList.length,
                             shrinkWrap: false,
                             scrollDirection: Axis.horizontal,
                             physics: ScrollPhysics(),
                             itemBuilder: (_, index) {
-                              return Container(
-                                  padding: EdgeInsets.only(right: 1),
-                                  child: Image.asset(Action[index]));
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      SwipeLeftAnimationRoute(
+                                          milliseconds: 200,
+                                          widget: About(
+                                            movieData: actionList[index],
+                                          )));
+                                },
+                                child: Container(
+                                    height: size.height * 0.08,
+                                    width: size.width * 0.3,
+                                    padding: EdgeInsets.only(left: 10),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(
+                                          actionList[index].imgSmPoster!,
+                                          fit: BoxFit.fill),
+                                    )),
+                              );
                             }),
                       )
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: size.height * 0.03,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
                       child: VariableText(
-                        text: "Trending Now",
+                        text: "Dramas",
                         fontcolor: primaryColorW,
                         fontsize: size.height * 0.02,
                         fontFamily: fontMedium,
@@ -555,7 +615,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           SwipeLeftAnimationRoute(
                               milliseconds: 300,
                               widget: ShowAllMovies(
-                                  showList: moviesData, title: "Now list"))),
+                                  showList: dramasList, title: "Now list"))),
                       child: Row(
                         children: [
                           VariableText(
@@ -580,29 +640,53 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Container(
                   width: size.width,
-                  height: size.height * 0.18,
+                  height: size.height * 0.22,
                   child: Row(
                     children: [
                       Expanded(
                         child: ListView.builder(
-                            itemCount: trend.length,
+                            itemCount: dramasList.length,
                             shrinkWrap: false,
                             scrollDirection: Axis.horizontal,
                             physics: ScrollPhysics(),
                             itemBuilder: (_, index) {
-                              return Container(
-                                  padding: EdgeInsets.only(right: 1),
-                                  child: Image.asset(trend[index]));
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      SwipeLeftAnimationRoute(
+                                          milliseconds: 200,
+                                          widget: About(
+                                            movieData: dramasList[index],
+                                          )));
+                                },
+                                child: Container(
+                                    height: size.height * 0.08,
+                                    width: size.width * 0.3,
+                                    padding: EdgeInsets.only(left: 10),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(
+                                          dramasList[index].imgSmPoster!,
+                                          fit: BoxFit.fill),
+                                    )),
+                              );
                             }),
                       )
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: size.height * 0.03,
                 ),
                 Row(
                   children: [
                     Expanded(
                       child: VariableText(
-                        text: "Anime",
+                        text: "Comedies",
                         fontcolor: primaryColorW,
                         fontsize: size.height * 0.02,
                         fontFamily: fontMedium,
@@ -615,7 +699,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           SwipeLeftAnimationRoute(
                               milliseconds: 300,
                               widget: ShowAllMovies(
-                                  showList: moviesData, title: "Now list"))),
+                                  showList: comediesList, title: "Now list"))),
                       child: Row(
                         children: [
                           VariableText(
@@ -640,23 +724,47 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Container(
                   width: size.width,
-                  height: size.height * 0.18,
+                  height: size.height * 0.22,
                   child: Row(
                     children: [
                       Expanded(
                         child: ListView.builder(
-                            itemCount: Anime.length,
+                            itemCount: comediesList.length,
                             shrinkWrap: false,
                             scrollDirection: Axis.horizontal,
                             physics: ScrollPhysics(),
                             itemBuilder: (_, index) {
-                              return Container(
-                                  padding: EdgeInsets.only(right: 1),
-                                  child: Image.asset(Anime[index]));
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      SwipeLeftAnimationRoute(
+                                          milliseconds: 200,
+                                          widget: About(
+                                            movieData: comediesList[index],
+                                          )));
+                                },
+                                child: Container(
+                                    height: size.height * 0.08,
+                                    width: size.width * 0.3,
+                                    padding: EdgeInsets.only(left: 10),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(
+                                          comediesList[index].imgSmPoster!,
+                                          fit: BoxFit.fill),
+                                    )),
+                              );
                             }),
                       )
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: size.height * 0.03,
                 ),
                 Row(
                   children: [
@@ -675,8 +783,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           SwipeLeftAnimationRoute(
                               milliseconds: 300,
                               widget: ShowAllMovies(
-                                  showList: moviesData,
-                                  title: "Sci_Fi Movies"))),
+                                  showList: Sci, title: "Sci_Fi Movies"))),
                       child: Row(
                         children: [
                           VariableText(
@@ -701,7 +808,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Container(
                   width: size.width,
-                  height: size.height * 0.18,
+                  height: size.height * 0.22,
                   child: Row(
                     children: [
                       Expanded(
@@ -711,74 +818,99 @@ class _HomeScreenState extends State<HomeScreen> {
                             scrollDirection: Axis.horizontal,
                             physics: ScrollPhysics(),
                             itemBuilder: (_, index) {
-                              return Container(
-                                  padding: EdgeInsets.only(right: 1),
-                                  child: Image.asset(Sci[index]));
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      SwipeLeftAnimationRoute(
+                                          milliseconds: 200,
+                                          widget: About(
+                                            movieData: Sci[index],
+                                          )));
+                                },
+                                child: Container(
+                                    height: size.height * 0.08,
+                                    width: size.width * 0.3,
+                                    padding: EdgeInsets.only(left: 10),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(
+                                          Sci[index].imgSmPoster!,
+                                          fit: BoxFit.fill),
+                                    )),
+                              );
                             }),
                       )
                     ],
                   ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: VariableText(
-                        text: "Kids Cartoon",
-                        fontcolor: primaryColorW,
-                        fontsize: size.height * 0.02,
-                        fontFamily: fontMedium,
-                        weight: FontWeight.w500,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () => Navigator.push(
-                          context,
-                          SwipeLeftAnimationRoute(
-                              milliseconds: 300,
-                              widget: ShowAllMovies(
-                                  showList: moviesData, title: "Cartoons"))),
-                      child: Row(
-                        children: [
-                          VariableText(
-                            text: "See All",
-                            fontcolor: primaryColorW,
-                            fontsize: size.height * 0.016,
-                            fontFamily: fontMedium,
-                            weight: FontWeight.w500,
-                          ),
-                          const Icon(
-                            Icons.arrow_forward_ios,
-                            color: primaryColorW,
-                            size: 17,
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
                 ),
                 SizedBox(
-                  height: size.height * 0.02,
+                  height: size.height * 0.03,
                 ),
-                Container(
-                  width: size.width,
-                  height: size.height * 0.18,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: ListView.builder(
-                            itemCount: kid.length,
-                            shrinkWrap: false,
-                            scrollDirection: Axis.horizontal,
-                            physics: ScrollPhysics(),
-                            itemBuilder: (_, index) {
-                              return Container(
-                                  padding: EdgeInsets.only(right: 1),
-                                  child: Image.asset(kid[index]));
-                            }),
-                      )
-                    ],
-                  ),
-                ),
+                // Row(
+                //   children: [
+                //     Expanded(
+                //       child: VariableText(
+                //         text: "Kids Cartoon",
+                //         fontcolor: primaryColorW,
+                //         fontsize: size.height * 0.02,
+                //         fontFamily: fontMedium,
+                //         weight: FontWeight.w500,
+                //       ),
+                //     ),
+                //     InkWell(
+                //       onTap: () => Navigator.push(
+                //           context,
+                //           SwipeLeftAnimationRoute(
+                //               milliseconds: 300,
+                //               widget: ShowAllMovies(
+                //                   showList: moviesData, title: "Cartoons"))),
+                //       child: Row(
+                //         children: [
+                //           VariableText(
+                //             text: "See All",
+                //             fontcolor: primaryColorW,
+                //             fontsize: size.height * 0.016,
+                //             fontFamily: fontMedium,
+                //             weight: FontWeight.w500,
+                //           ),
+                //           const Icon(
+                //             Icons.arrow_forward_ios,
+                //             color: primaryColorW,
+                //             size: 17,
+                //           )
+                //         ],
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                // SizedBox(
+                //   height: size.height * 0.02,
+                // ),
+                // Container(
+                //   width: size.width,
+                //   height: size.height * 0.18,
+                //   child: Row(
+                //     children: [
+                //       Expanded(
+                //         child: ListView.builder(
+                //             itemCount: kid.length,
+                //             shrinkWrap: false,
+                //             scrollDirection: Axis.horizontal,
+                //             physics: ScrollPhysics(),
+                //             itemBuilder: (_, index) {
+                //               return Container(
+                //                 padding: EdgeInsets.only(right: 1),
+                //                 // child: Image.asset(kid[index])
+                //               );
+                //             }),
+                //       )
+                //     ],
+                //   ),
+                // ),
                 Row(
                   children: [
                     Expanded(
@@ -796,7 +928,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           SwipeLeftAnimationRoute(
                               milliseconds: 300,
                               widget: ShowAllMovies(
-                                  showList: moviesData,
+                                  showList: romanticList,
                                   title: "Romantic Movies"))),
                       child: Row(
                         children: [
@@ -822,23 +954,47 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Container(
                   width: size.width,
-                  height: size.height * 0.18,
+                  height: size.height * 0.22,
                   child: Row(
                     children: [
                       Expanded(
                         child: ListView.builder(
-                            itemCount: rom.length,
+                            itemCount: romanticList.length,
                             shrinkWrap: false,
                             scrollDirection: Axis.horizontal,
                             physics: ScrollPhysics(),
                             itemBuilder: (_, index) {
-                              return Container(
-                                  padding: EdgeInsets.only(right: 1),
-                                  child: Image.asset(rom[index]));
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      SwipeLeftAnimationRoute(
+                                          milliseconds: 200,
+                                          widget: About(
+                                            movieData: romanticList[index],
+                                          )));
+                                },
+                                child: Container(
+                                    height: size.height * 0.08,
+                                    width: size.width * 0.3,
+                                    padding: EdgeInsets.only(left: 10),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(
+                                          romanticList[index].imgSmPoster!,
+                                          fit: BoxFit.fill),
+                                    )),
+                              );
                             }),
                       )
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: size.height * 0.03,
                 ),
                 Row(
                   children: [
@@ -857,8 +1013,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           SwipeLeftAnimationRoute(
                               milliseconds: 300,
                               widget: ShowAllMovies(
-                                  showList: moviesData,
-                                  title: "Horror Movies"))),
+                                  showList: horror, title: "Horror Movies"))),
                       child: Row(
                         children: [
                           VariableText(
@@ -883,123 +1038,145 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Container(
                   width: size.width,
-                  height: size.height * 0.18,
+                  height: size.height * 0.22,
                   child: Row(
                     children: [
                       Expanded(
                         child: ListView.builder(
-                            itemCount: Horror.length,
+                            itemCount: horror.length,
                             shrinkWrap: false,
                             scrollDirection: Axis.horizontal,
                             physics: ScrollPhysics(),
                             itemBuilder: (_, index) {
-                              return Container(
-                                  padding: EdgeInsets.only(right: 1),
-                                  child: Image.asset(Horror[index]));
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      SwipeLeftAnimationRoute(
+                                          milliseconds: 200,
+                                          widget: About(
+                                            movieData: horror[index],
+                                          )));
+                                },
+                                child: Container(
+                                    height: size.height * 0.08,
+                                    width: size.width * 0.3,
+                                    padding: EdgeInsets.only(left: 10),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(
+                                          horror[index].imgSmPoster!,
+                                          fit: BoxFit.fill),
+                                    )),
+                              );
                             }),
                       )
                     ],
                   ),
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: VariableText(
-                        text: "Adventure",
-                        fontcolor: primaryColorW,
-                        fontsize: size.height * 0.02,
-                        fontFamily: fontMedium,
-                        weight: FontWeight.w500,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () => Navigator.push(
-                          context,
-                          SwipeLeftAnimationRoute(
-                              milliseconds: 300,
-                              widget: ShowAllMovies(
-                                  showList: moviesData,
-                                  title: "Adventure Movies"))),
-                      child: Row(
-                        children: [
-                          VariableText(
-                            text: "See All",
-                            fontcolor: primaryColorW,
-                            fontsize: size.height * 0.016,
-                            fontFamily: fontMedium,
-                            weight: FontWeight.w500,
-                          ),
-                          const Icon(
-                            Icons.arrow_forward_ios,
-                            color: primaryColorW,
-                            size: 17,
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
-                Container(
-                  width: size.width,
-                  height: size.height * 0.18,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: ListView.builder(
-                            itemCount: adv.length,
-                            shrinkWrap: false,
-                            scrollDirection: Axis.horizontal,
-                            physics: ScrollPhysics(),
-                            itemBuilder: (_, index) {
-                              return Container(
-                                  padding: EdgeInsets.only(right: 1),
-                                  child: Image.asset(adv[index]));
-                            }),
-                      )
-                    ],
-                  ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: VariableText(
-                        text: "Animated Movies",
-                        fontcolor: primaryColorW,
-                        fontsize: size.height * 0.02,
-                        fontFamily: fontMedium,
-                        weight: FontWeight.w500,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () => Navigator.push(
-                          context,
-                          SwipeLeftAnimationRoute(
-                              milliseconds: 300,
-                              widget: ShowAllMovies(
-                                  showList: moviesData,
-                                  title: "Animated Movies"))),
-                      child: Row(
-                        children: [
-                          VariableText(
-                            text: "See All",
-                            fontcolor: primaryColorW,
-                            fontsize: size.height * 0.016,
-                            fontFamily: fontMedium,
-                            weight: FontWeight.w500,
-                          ),
-                          const Icon(
-                            Icons.arrow_forward_ios,
-                            color: primaryColorW,
-                            size: 17,
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     Expanded(
+                //       child: VariableText(
+                //         text: "Adventure",
+                //         fontcolor: primaryColorW,
+                //         fontsize: size.height * 0.02,
+                //         fontFamily: fontMedium,
+                //         weight: FontWeight.w500,
+                //       ),
+                //     ),
+                //     InkWell(
+                //       onTap: () => Navigator.push(
+                //           context,
+                //           SwipeLeftAnimationRoute(
+                //               milliseconds: 300,
+                //               widget: ShowAllMovies(
+                //                   showList: moviesData,
+                //                   title: "Adventure Movies"))),
+                //       child: Row(
+                //         children: [
+                //           VariableText(
+                //             text: "See All",
+                //             fontcolor: primaryColorW,
+                //             fontsize: size.height * 0.016,
+                //             fontFamily: fontMedium,
+                //             weight: FontWeight.w500,
+                //           ),
+                //           const Icon(
+                //             Icons.arrow_forward_ios,
+                //             color: primaryColorW,
+                //             size: 17,
+                //           )
+                //         ],
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                // SizedBox(
+                //   height: size.height * 0.02,
+                // ),
+                // Container(
+                //   width: size.width,
+                //   height: size.height * 0.18,
+                //   child: Row(
+                //     children: [
+                //       Expanded(
+                //         child: ListView.builder(
+                //             itemCount: adv.length,
+                //             shrinkWrap: false,
+                //             scrollDirection: Axis.horizontal,
+                //             physics: ScrollPhysics(),
+                //             itemBuilder: (_, index) {
+                //               return Container(
+                //                 padding: EdgeInsets.only(right: 1),
+                //                 // child: Image.asset(adv[index])
+                //               );
+                //             }),
+                //       )
+                //     ],
+                //   ),
+                // ),
+                // Row(
+                //   children: [
+                //     Expanded(
+                //       child: VariableText(
+                //         text: "Animated Movies",
+                //         fontcolor: primaryColorW,
+                //         fontsize: size.height * 0.02,
+                //         fontFamily: fontMedium,
+                //         weight: FontWeight.w500,
+                //       ),
+                //     ),
+                //     InkWell(
+                //       onTap: () => Navigator.push(
+                //           context,
+                //           SwipeLeftAnimationRoute(
+                //               milliseconds: 300,
+                //               widget: ShowAllMovies(
+                //                   showList: moviesData,
+                //                   title: "Animated Movies"))),
+                //       child: Row(
+                //         children: [
+                //           VariableText(
+                //             text: "See All",
+                //             fontcolor: primaryColorW,
+                //             fontsize: size.height * 0.016,
+                //             fontFamily: fontMedium,
+                //             weight: FontWeight.w500,
+                //           ),
+                //           const Icon(
+                //             Icons.arrow_forward_ios,
+                //             color: primaryColorW,
+                //             size: 17,
+                //           )
+                //         ],
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 SizedBox(
                   height: size.height * 0.02,
                 ),

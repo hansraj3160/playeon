@@ -32,7 +32,7 @@ class _VideoPlayersState extends State<VideoPlayers> {
     _controller.play();
     _controller.addListener(() {
       setState(() {
-        _sliderValue = _controller.value.position.inMilliseconds.toDouble();
+        _sliderValue = _controller.value.position.inMilliseconds.toDouble(); 
       });
     });
   }
