@@ -183,7 +183,7 @@ class _searchscreenState extends State<searchscreen> {
                           ),
                           MyButton(
                             btnHeight: size.height * 0.05,
-                            btnWidth: size.width * 0.2,
+                            btnWidth: size.width * 0.3,
                             borderColor: textColor1,
                             btnColor: Colors.transparent,
                             btnRadius: 200,
@@ -198,7 +198,7 @@ class _searchscreenState extends State<searchscreen> {
                           ),
                           MyButton(
                             btnHeight: size.height * 0.05,
-                            btnWidth: size.width * 0.2,
+                            btnWidth: size.width * 0.3,
                             borderColor: textColor1,
                             btnColor: Colors.transparent,
                             btnRadius: 200,
@@ -218,7 +218,7 @@ class _searchscreenState extends State<searchscreen> {
                         children: [
                           MyButton(
                             btnHeight: size.height * 0.05,
-                            btnWidth: size.width * 0.2,
+                            btnWidth: size.width * 0.25,
                             borderColor: textColor1,
                             btnColor: Colors.transparent,
                             btnRadius: 200,
@@ -234,7 +234,7 @@ class _searchscreenState extends State<searchscreen> {
                           ),
                           MyButton(
                             btnHeight: size.height * 0.05,
-                            btnWidth: size.width * 0.2,
+                            btnWidth: size.width * 0.25,
                             borderColor: textColor1,
                             btnColor: Colors.transparent,
                             btnRadius: 200,
