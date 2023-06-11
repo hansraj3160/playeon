@@ -13,13 +13,4 @@ class get_token {
     nAME = json['NAME'];
     gENERATEDDATETIME = json['GENERATED_DATE_TIME'];
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['MERCHANT_ID'] = this.mERCHANTID;
-    data['ACCESS_TOKEN'] = this.aCCESSTOKEN;
-    data['NAME'] = this.nAME;
-    data['GENERATED_DATE_TIME'] = this.gENERATEDDATETIME;
-    return data;
-  }
 }

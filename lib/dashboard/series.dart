@@ -7,7 +7,7 @@ import '../models/series_model.dart';
 import '../widgets/common.dart';
 import '../widgets/style.dart';
 import 'about.dart';
-import 'local_preference_controller.dart';
+import '../services/local_preference_controller.dart';
 
 class Series extends StatefulWidget {
   const Series({super.key});
@@ -20,11 +20,9 @@ class _SeriesState extends State<Series> {
   @override
   bool isLoading = false;
   setLoading(bool loading) {
-    if (mounted) {
-      setState(() {
-        isLoading = loading;
-      });
-    }
+    setState(() {
+      isLoading = loading;
+    });
   }
 
   List<SeriesModel> moviesData = [];
@@ -35,7 +33,6 @@ class _SeriesState extends State<Series> {
     String token = await prefs.getUserToken();
     var response = await ApiController().getSeries(token);
 
-    print(" form api $response");
     for (var item in response) {
       moviesData.add(SeriesModel.fromJson(item));
     }
@@ -65,36 +62,6 @@ class _SeriesState extends State<Series> {
                 ),
                 Column(
                   children: [
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 30, horizontal: 15),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      Icons.arrow_back_ios,
-                                      color: primaryColorW,
-                                      size: 17,
-                                    ),
-                                    VariableText(
-                                      text: "Back",
-                                      fontcolor: primaryColorW,
-                                      fontsize: size.height * 0.022,
-                                      fontFamily: fontSemiBold,
-                                      textAlign: TextAlign.start,
-                                      weight: FontWeight.w500,
-                                    ),
-                                  ]),
-                            ),
-                          ]),
-                    ),
                     SizedBox(
                       height: 280,
                     ),
@@ -129,7 +96,7 @@ class _SeriesState extends State<Series> {
                                 itemCount: moviesData.length,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 6,
+                                  crossAxisCount: 3,
                                   crossAxisSpacing: size.width * 0.03,
                                   mainAxisSpacing: size.height * 0.015,
                                   // childAspectRatio: 0.63,
@@ -159,7 +126,7 @@ class _SeriesState extends State<Series> {
                                               horizontal: size.width * 0.01,
                                               vertical: size.height * 0.01),
                                           decoration: BoxDecoration(
-                                            color: Theme.of(context).cardColor,
+                                            color: primaryColorW,
                                             //color: Colors.red,
                                             borderRadius:
                                                 BorderRadius.circular(18),
@@ -184,7 +151,7 @@ class _SeriesState extends State<Series> {
                                 itemCount: moviesData.length,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 6,
+                                  crossAxisCount: 4,
                                   crossAxisSpacing: size.width * 0.03,
                                   mainAxisSpacing: size.height * 0.015,
                                   // childAspectRatio: 0.63,
@@ -205,8 +172,11 @@ class _SeriesState extends State<Series> {
                                                   movieData: moviesData[index],
                                                 )));
                                       },
-                                      child: Image.network(
-                                          moviesData[index].imgSmPoster!));
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.network(
+                                            moviesData[index].imgSmPoster!),
+                                      ));
                                 }),
                       ),
                     )

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:playeon/auth/user_model.dart';
-import 'package:playeon/dashboard/local_preference_controller.dart';
+import 'package:playeon/services/local_preference_controller.dart';
 import 'package:playeon/main_screen.dart';
 import 'package:playeon/widgets/style.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +11,7 @@ import '../widgets/common.dart';
 import 'SignupScreen.dart';
 import 'api_controller.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'dart:convert';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -48,17 +49,24 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   loginUser() async {
-    setLoading(true);
+    LocalPreference pref = LocalPreference();
+    // ignore: curly_braces_in_flow_control_structures
     if (validate()) {
+      setLoading(true);
+      UserModel userCred = UserModel(
+          username: usernameController.text, password: passwordController.text);
+      String logindata = userCred.toJsonString();
+      await pref.setCrediantial(logindata);
       var response = await ApiController()
           .loginUser(usernameController.text, passwordController.text);
+
       // print("Get $response");
       if (response['status']) {
         setLoading(false);
         String token = response['msg'];
         print("Before jwtdecode $token");
         Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-     
+
         print(decodedToken['userId']);
         User user = User.fromJson(decodedToken['userId']);
         await Provider.of<UserProvider>(context, listen: false).setUSer(user);

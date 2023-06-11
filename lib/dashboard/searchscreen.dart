@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../auth/api_controller.dart';
 import '../widgets/common.dart';
-import 'local_preference_controller.dart';
+import '../services/local_preference_controller.dart';
 
 class searchscreen extends StatefulWidget {
   const searchscreen({super.key});
@@ -59,36 +59,39 @@ class _searchscreenState extends State<searchscreen> {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: backgroundColor,
+      appBar: AppBar(
+        backgroundColor: primaryColorB,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Column(
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: textColor1,
-                    borderRadius: BorderRadius.circular(40),
-                    boxShadow: [
-                      BoxShadow(
-                        color: textColor1.withOpacity(0),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Search Here',
-                      prefixIcon: Icon(Icons.search),
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
+                // Container(
+                //   decoration: BoxDecoration(
+                //     color: textColor1,
+                //     borderRadius: BorderRadius.circular(40),
+                //     boxShadow: [
+                //       BoxShadow(
+                //         color: textColor1.withOpacity(0),
+                //         spreadRadius: 2,
+                //         blurRadius: 5,
+                //         offset: Offset(0, 3),
+                //       ),
+                //     ],
+                //   ),
+                //   child: TextField(
+                //     decoration: InputDecoration(
+                //       hintText: 'Search Here',
+                //       prefixIcon:  Icon(Icons.search),
+                //       border: InputBorder.none,
+                //     ),
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                    vertical: 40,
+                    vertical: 10,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,

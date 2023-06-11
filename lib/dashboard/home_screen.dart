@@ -1,18 +1,27 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:playeon/auth/api_controller.dart';
-import 'package:playeon/dashboard/movies.dart';
-import 'package:playeon/dashboard/series.dart';
+import 'package:playeon/dashboard/searchscreen.dart';
 import 'package:playeon/dashboard/show_all.dart';
 import 'package:playeon/models/movies_model.dart';
 import 'package:playeon/widgets/common.dart';
 import 'package:playeon/widgets/style.dart';
 import 'package:provider/provider.dart';
 
+import '../models/user_model.dart';
 import '../provider/filter_movies.dart';
+import '../provider/user_provider.dart';
 import 'about.dart';
-import 'local_preference_controller.dart';
+import '../services/local_preference_controller.dart';
+
+List<String> itemImages = [
+  "assets/images/img_c1.jpg",
+  "assets/images/img_c2.jpg",
+  "assets/images/img_c3.jpg",
+  "assets/images/img_c4.jpg"
+];
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,11 +31,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List itemImages = [
-    "assets/images/crousel1.png",
-    "assets/images/crousel2.png",
-    "assets/images/crousel3.png",
-  ];
   int currentIndex = 0;
   String? categoryController;
   List<MoviesModel> categoryList = [];
@@ -202,148 +206,74 @@ class _HomeScreenState extends State<HomeScreen> {
     LocalPreference prefs = LocalPreference();
     String token = await prefs.getUserToken();
     var response = await ApiController().getCategories(token, "comedies");
-    print("Response in comedies ${response}");
+
     for (var item in response) {
       comediesList.add(MoviesModel.fromJson(item));
     }
     setLoading(false);
   }
 
-  List listItem = ["Item 1", "Item 2"];
+  final List<Widget> imageSliders = itemImages
+      .map((item) => Container(
+            height: 250,
+            width: 200,
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: Image.asset(item, fit: BoxFit.fill)),
+          ))
+      .toList();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
+    User? userdata = Provider.of<UserProvider>(context).user;
     return Stack(
       children: [
         SafeArea(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(top: 30.0, left: 15),
+              padding: const EdgeInsets.only(top: 5.0, left: 5),
               child: Column(children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Expanded(
-                        child: VariableText(
-                      text: "MOVIES",
-                      fontcolor: primaryColorW,
-                      fontsize: size.height * 0.03,
-                      fontFamily: fontMedium,
-                      weight: FontWeight.w500,
-                    )),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            SwipeLeftAnimationRoute(
+                                milliseconds: 200, widget: searchscreen()));
+                      },
                       icon: Icon(
                         Icons.search,
                         color: textColor1,
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    MyButton(
-                      btnHeight: size.height * 0.05,
-                      btnWidth: size.width * 0.24,
-                      borderColor: textColor5,
-                      btnColor: textColor5,
-                      btnRadius: 200,
-                      btnTxt: "Movies",
-                      fontSize: size.height * 0.020,
-                      weight: FontWeight.w500,
-                      fontFamily: fontRegular,
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            SwipeLeftAnimationRoute(
-                                milliseconds: 200,
-                                widget: Movies(moviesData: moviesData)));
-                      },
-                    ),
-                    SizedBox(
-                      width: size.width * 0.02,
-                    ),
-                    MyButton(
-                      btnHeight: size.height * 0.05,
-                      btnWidth: size.width * 0.24,
-                      borderColor: textColor5,
-                      btnColor: textColor5,
-                      btnRadius: 200,
-                      btnTxt: "Series",
-                      fontSize: size.height * 0.020,
-                      weight: FontWeight.w500,
-                      fontFamily: fontRegular,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Series()),
-                        );
-                      },
-                    ),
-                    SizedBox(
-                      width: size.width * 0.02,
-                    ),
-                    Expanded(
-                      child: MyDropDown(
-                        hinttext: "Categories",
-                        width: size.width * 0.2,
-                        states: categorieslist,
-                        radius: 50,
-                        selectedValue: (value) {
-                          print(value);
-
-                          categoryController = value;
-                        },
+                    Container(
+                      height: size.height * 0.03,
+                      width: size.height * 0.03,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.network(
+                          userdata!.profilePicture!,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
+                    )
                   ],
                 ),
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                SizedBox(
-                  height: 200,
-                  width: double.infinity,
-                  child: PageView.builder(
-                    onPageChanged: (index) {
-                      setState(() {
-                        currentIndex = index % itemImages.length;
-                      });
-                    },
-
-                    // itemCount: itemImages.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: SizedBox(
-                          height: 400,
-                          width: double.infinity,
-                          child: Image.asset(
-                              itemImages[index % itemImages.length],
-                              fit: BoxFit.cover),
-                        ),
-                      );
-                    },
+                CarouselSlider(
+                  options: CarouselOptions(
+                    aspectRatio: 2.0,
+                    enlargeCenterPage: true,
+                    scrollDirection: Axis.horizontal,
+                    autoPlay: true,
                   ),
+                  items: imageSliders,
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    for (var i = 0; i < itemImages.length; i++)
-                      buildIndicator(currentIndex == i)
-                  ],
-                ),
-                SizedBox(
-                  height: size.height * 0.03,
-                ),
+
                 Row(
                   children: [
                     Expanded(

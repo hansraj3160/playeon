@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:playeon/auth/login_screen.dart';
 import 'package:playeon/dashboard/about.dart';
+import 'package:playeon/services/local_preference_controller.dart';
 
 import '../widgets/common.dart';
 import '../widgets/style.dart';
@@ -146,8 +147,10 @@ class _SettingState extends State<Setting> {
                 borderColor: textColor1,
                 txtColor: textColor5,
                 fontSize: 20,
-                onTap: () {
-                  Navigator.push(
+                onTap: () async {
+                  LocalPreference pref = LocalPreference();
+                  await pref.removeUser();
+                  await Navigator.push(
                       context,
                       SwipeLeftAnimationRoute(
                           milliseconds: 200, widget: LoginScreen()));
@@ -160,5 +163,3 @@ class _SettingState extends State<Setting> {
     );
   }
 }
-
-
