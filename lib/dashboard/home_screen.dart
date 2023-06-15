@@ -33,6 +33,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
   String? categoryController;
+  CarouselController _controller = CarouselController();
+
   List<MoviesModel> categoryList = [];
   List<MoviesModel> imagefor = [];
 
@@ -213,15 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setLoading(false);
   }
 
-  final List<Widget> imageSliders = itemImages
-      .map((item) => Container(
-            height: 250,
-            width: 200,
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: Image.asset(item, fit: BoxFit.fill)),
-          ))
-      .toList();
+  // final List<Widget> imageSliders =
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -266,12 +260,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 CarouselSlider(
                   options: CarouselOptions(
-                    aspectRatio: 2.0,
-                    enlargeCenterPage: true,
-                    scrollDirection: Axis.horizontal,
+                    aspectRatio: 2.9,
                     autoPlay: true,
+                    enlargeCenterPage: true,
+                    viewportFraction: 0.6,
                   ),
-                  items: imageSliders,
+                  items: List.generate(
+                      itemImages.length,
+                      (index) => Container(
+                            width: size.width * 0.6,
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Image.asset(itemImages[index],
+                                    fit: BoxFit.fill)),
+                          )),
+                  carouselController: _controller,
+                  
+                ),
+                SizedBox(
+                  height: size.height * 0.04,
                 ),
 
                 Row(

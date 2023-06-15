@@ -3,7 +3,7 @@ import 'package:playeon/auth/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class ApiController {
-  final int _timeoutDuration = 15;
+  final int _timeoutDuration = 30;
   //! login user
 
   Future<dynamic> loginUser(String userName, String password) async {

@@ -32,7 +32,7 @@ class _VideoPlayersState extends State<VideoPlayers> {
     _controller.play();
     _controller.addListener(() {
       setState(() {
-        _sliderValue = _controller.value.position.inMilliseconds.toDouble(); 
+        _sliderValue = _controller.value.position.inMilliseconds.toDouble();
       });
     });
   }
@@ -141,12 +141,15 @@ class _VideoPlayersState extends State<VideoPlayers> {
                   ),
                   RotatedBox(
                     quarterTurns: 1,
-                    child: VideoProgressIndicator(
-                      _controller,
-                      allowScrubbing: true,
-                      colors: VideoProgressColors(
-                        playedColor: Colors.green,
-                        bufferedColor: Colors.grey,
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 10),
+                      child: VideoProgressIndicator(
+                        _controller,
+                        allowScrubbing: true,
+                        colors: VideoProgressColors(
+                          playedColor: Colors.green,
+                          bufferedColor: Colors.grey,
+                        ),
                       ),
                     ),
                   ),
@@ -390,44 +393,44 @@ class _VideoPlayersState extends State<VideoPlayers> {
                                     : null,
                               ),
                               Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                          width: 60,
-                        ),
-                        Expanded(
-                            child: InkWell(
-                          onDoubleTap: () {
-                            _seekBackward();
-                          },
-                          child: Container(
-                            height: 150,
-                            width: 150,
-                            // color: primaryColor1,
-                          ),
-                        )),
-                        Expanded(
-                          child: InkWell(
-                            onDoubleTap: () {
-                              _seekForward();
-                            },
-                            child: Container(
-                              height: 150,
-                              width: 150,
-                              // color: primaryColor2,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 60,
-                        ),
-                        SizedBox(
-                          height: 600,
-                        )
-                      ],
-                    ),
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SizedBox(
+                                    width: 60,
+                                  ),
+                                  Expanded(
+                                      child: InkWell(
+                                    onDoubleTap: () {
+                                      _seekBackward();
+                                    },
+                                    child: Container(
+                                      height: 150,
+                                      width: 150,
+                                      // color: primaryColor1,
+                                    ),
+                                  )),
+                                  Expanded(
+                                    child: InkWell(
+                                      onDoubleTap: () {
+                                        _seekForward();
+                                      },
+                                      child: Container(
+                                        height: 150,
+                                        width: 150,
+                                        // color: primaryColor2,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 60,
+                                  ),
+                                  SizedBox(
+                                    height: 600,
+                                  )
+                                ],
+                              ),
                             ],
                           ),
                         );

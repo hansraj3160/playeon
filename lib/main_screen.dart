@@ -92,13 +92,14 @@ class _MainScreenState extends State<MainScreen>
           ],
         ),
         bottomNavigationBar: Container(
-          height: size.height * 0.05,
+          height: size.height * 0.08,
           decoration: BoxDecoration(color: primaryColorB),
           child: TabBar(
             controller: tabController,
             indicatorColor: primaryColor1,
             indicator: const BoxDecoration(
-                border: Border(top: BorderSide(color: textColor1, width: 2))),
+                border:
+                    Border(top: BorderSide(color: primaryColor1, width: 2))),
             tabs: List.generate(mainTab['tabs']!.length, (index) {
               return Tab(
                   child: VariableText(
