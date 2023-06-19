@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/movies_model.dart';
 import '../widgets/common.dart';
 import '../widgets/style.dart';
+import 'player2.dart';
 import 'videoplayer.dart';
 
 class About extends StatefulWidget {
@@ -96,22 +97,46 @@ class _AboutState extends State<About> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        VariableText(
-                          text: "${widget.movieData!.duration!}",
-                          fontcolor: textColorS,
-                          fontsize: size.height * 0.017,
-                          fontFamily: fontMedium,
-                          weight: FontWeight.w500,
-                          // max_lines: 2,
+                        Row(
+                          children: [
+                            VariableText(
+                              text: "Type: ",
+                              fontcolor: textColor1,
+                              fontsize: size.height * 0.018,
+                              fontFamily: fontBold,
+                              weight: FontWeight.w500,
+                              // max_lines: 2,
+                            ),
+                            VariableText(
+                              text: "${widget.movieData!.type}",
+                              fontcolor: textColorS,
+                              fontsize: size.height * 0.017,
+                              fontFamily: fontMedium,
+                              weight: FontWeight.w500,
+                              textAlign: TextAlign.start,
+                              // max_lines: 2,
+                            ),
+                          ],
                         ),
-                        VariableText(
-                          text: "${widget.movieData!.type}",
-                          fontcolor: textColorS,
-                          fontsize: size.height * 0.017,
-                          fontFamily: fontMedium,
-                          weight: FontWeight.w500,
-                          textAlign: TextAlign.start,
-                          // max_lines: 2,
+                        Row(
+                          children: [
+                            VariableText(
+                              text: "Duration: ",
+                              fontcolor: textColor1,
+                              fontsize: size.height * 0.018,
+                              fontFamily: fontBold,
+                              weight: FontWeight.w500,
+                              // max_lines: 2,
+                            ),
+                            VariableText(
+                              text: "${widget.movieData!.duration!}",
+                              fontcolor: textColorS,
+                              fontsize: size.height * 0.017,
+                              fontFamily: fontMedium,
+                              weight: FontWeight.w500,
+                              // max_lines: 2,
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -146,6 +171,7 @@ class _AboutState extends State<About> {
                         ),
                       ],
                     ),
+                    SizedBox(height: 5),
                     MyButton(
                       btnHeight: size.height * 0.05,
                       btnWidth: size.width * 0.24,
@@ -160,7 +186,7 @@ class _AboutState extends State<About> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => VideoPlayers(
+                              builder: (context) => DefaultPlayer(
                                     url: widget.movieData!.video!,
                                   )),
                         );

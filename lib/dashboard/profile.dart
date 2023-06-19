@@ -4,8 +4,10 @@ import 'package:playeon/dashboard/setting.dart';
 import 'package:playeon/widgets/style.dart';
 import 'package:provider/provider.dart';
 
+import '../auth/login_screen.dart';
 import '../models/user_model.dart';
 import '../provider/user_provider.dart';
+import '../services/local_preference_controller.dart';
 import '../widgets/common.dart';
 
 class Profile extends StatefulWidget {
@@ -54,13 +56,15 @@ class _ProfileState extends State<Profile> {
       backgroundColor: backgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 30.0, left: 15),
-                  child: Row(children: [
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                vertical: size.height * verticalPadding,
+                horizontal: size.width * horizontalPadding),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(children: [
                     Expanded(
                       child: VariableText(
                         text: "Profile",
@@ -70,115 +74,252 @@ class _ProfileState extends State<Profile> {
                         weight: FontWeight.w500,
                       ),
                     ),
-                    IconButton(
-                        icon: Icon(Icons.settings, color: textColor1),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Setting()),
-                          );
-                        }),
+                    // IconButton(
+                    //     icon: Icon(Icons.settings, color: textColor1),
+                    //     onPressed: () {
+                    //       Navigator.push(
+                    //         context,
+                    //         MaterialPageRoute(
+                    //             builder: (context) => const Setting()),
+                    //       );
+                    //     }),
                   ]),
-                ),
-                SizedBox(
-                  child: Container(
-                    color: backgroundColor,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircleAvatar(
-                              radius: 60,
-                              backgroundImage:
-                                  NetworkImage(userdata!.profilePicture!),
-                              backgroundColor: backgroundColor,
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20,),
-                        VariableText(
-                          text: userdata.name,
-                          fontsize: size.height * 0.024,
-                          fontFamily: fontMedium,
-                          fontcolor: textColor1,
-                          weight: FontWeight.w500,
-                          max_lines: 2,
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                         VariableText(
-                          text: userdata.email,
-                          fontsize: size.height * 0.024,
-                          fontFamily: fontMedium,
-                          fontcolor: textColor1,
-                          weight: FontWeight.w500,
-                          max_lines: 2,
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                         VariableText(
-                        text: userdata.phoneNumber,
-                          fontsize: size.height * 0.024,
-                          fontFamily: fontMedium,
-                          fontcolor: textColor1,
-                          weight: FontWeight.w500,
-                          max_lines: 2,
-                        ),
-                        
+                  SizedBox(
+                    child: Container(
+                      color: backgroundColor,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CircleAvatar(
+                                radius: 60,
+                                backgroundImage:
+                                    NetworkImage(userdata!.profilePicture!),
+                                backgroundColor: backgroundColor,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: VariableText(
+                                  text: "Name",
+                                  fontsize: size.height * 0.02,
+                                  fontFamily: fontMedium,
+                                  fontcolor: textColor1,
+                                  weight: FontWeight.w500,
+                                  max_lines: 2,
+                                ),
+                              ),
+                              VariableText(
+                                text: userdata.name,
+                                fontsize: size.height * 0.02,
+                                fontFamily: fontMedium,
+                                fontcolor: textColor1.withOpacity(0.8),
+                                weight: FontWeight.w500,
+                                max_lines: 2,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: VariableText(
+                                  text: "Email",
+                                  fontsize: size.height * 0.02,
+                                  fontFamily: fontMedium,
+                                  fontcolor: textColor1,
+                                  weight: FontWeight.w500,
+                                  max_lines: 2,
+                                ),
+                              ),
+                              VariableText(
+                                text: userdata.email,
+                                fontsize: size.height * 0.02,
+                                fontFamily: fontMedium,
+                                fontcolor: textColor1.withOpacity(0.8),
+                                weight: FontWeight.w500,
+                                max_lines: 2,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: VariableText(
+                                  text: "Password",
+                                  fontsize: size.height * 0.02,
+                                  fontFamily: fontMedium,
+                                  fontcolor: textColor1,
+                                  weight: FontWeight.w500,
+                                  max_lines: 2,
+                                ),
+                              ),
+                              VariableText(
+                                text:
+                                    "*******+${userdata.password!.substring(0, 3)}",
+                                fontsize: size.height * 0.02,
+                                fontFamily: fontMedium,
+                                fontcolor: textColor1.withOpacity(0.8),
+                                weight: FontWeight.w500,
+                                max_lines: 2,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: VariableText(
+                                  text: "Phone Number",
+                                  fontsize: size.height * 0.02,
+                                  fontFamily: fontMedium,
+                                  fontcolor: textColor1,
+                                  weight: FontWeight.w500,
+                                  max_lines: 2,
+                                ),
+                              ),
+                              VariableText(
+                                text: userdata.phoneNumber,
+                                fontsize: size.height * 0.02,
+                                fontFamily: fontMedium,
+                                fontcolor: textColor1.withOpacity(0.8),
+                                weight: FontWeight.w500,
+                                max_lines: 2,
+                              ),
+                            ],
+                          ),
 
-                         SizedBox(
-                          height: 20,
-                        ),
-                         VariableText(
-                        text: userdata.country,
-                          fontsize: size.height * 0.024,
-                          fontFamily: fontMedium,
-                          fontcolor: textColor1,
-                          weight: FontWeight.w500,
-                          max_lines: 2,
-                        ),
-                        
-                        // Container(
-                        //   width: size.width,
-                        //   height: size.height * 0.6,
-                        //   padding: EdgeInsets.symmetric(
-                        //       vertical: size.height * verticalPadding),
-                        //   child: Column(
-                        //     children: [
-                        //       Expanded(
-                        //         child: GridView.builder(
-                        //             itemCount: images.length,
-                        //             gridDelegate:
-                        //                 SliverGridDelegateWithFixedCrossAxisCount(
-                        //               crossAxisCount: 6,
-                        //               crossAxisSpacing: size.width * 0.03,
-                        //               mainAxisSpacing: size.height * 0.015,
-                        //               // childAspectRatio: 0.63,
-                        //               childAspectRatio:
-                        //                   size.width / (size.height * 0.9),
-                        //             ),
-                        //             shrinkWrap: false,
-                        //             scrollDirection: Axis.vertical,
-                        //             physics: ScrollPhysics(),
-                        //             itemBuilder: (_, index) {
-                        //               return Container(
-                        //                   child: Image.asset(images[index]));
-                        //             }),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                      ],
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: VariableText(
+                                  text: "Address",
+                                  fontsize: size.height * 0.02,
+                                  fontFamily: fontMedium,
+                                  fontcolor: textColor1,
+                                  weight: FontWeight.w500,
+                                  max_lines: 2,
+                                ),
+                              ),
+                              VariableText(
+                                text: userdata.country,
+                                fontsize: size.height * 0.020,
+                                fontFamily: fontMedium,
+                                fontcolor: textColor1.withOpacity(0.8),
+                                weight: FontWeight.w500,
+                                max_lines: 2,
+                              ),
+                            ],
+                          ),
+
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: VariableText(
+                                  text: "Expire Date",
+                                  fontsize: size.height * 0.02,
+                                  fontFamily: fontMedium,
+                                  fontcolor: textColor1,
+                                  weight: FontWeight.w500,
+                                  max_lines: 2,
+                                ),
+                              ),
+                              VariableText(
+                                text:
+                                    "${DateTime.parse(userdata.voucherExpiryDate!).toLocal().toIso8601String().split('T')[0]}",
+                                fontsize: size.height * 0.020,
+                                fontFamily: fontMedium,
+                                fontcolor: textColor1.withOpacity(0.8),
+                                weight: FontWeight.w500,
+                                max_lines: 2,
+                              ),
+                            ],
+                          ),
+
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              MyButton(
+                                btnHeight: size.height * 0.055,
+                                btnWidth: size.width * 0.70,
+                                btnTxt: "Sign Out",
+                                btnColor: Colors.white,
+                                btnRadius: 25,
+                                borderColor: textColor1,
+                                txtColor: textColor5,
+                                fontSize: 15,
+                                onTap: () async {
+                                  LocalPreference pref = LocalPreference();
+                                  await pref.removeUser();
+                                  await Navigator.push(
+                                      context,
+                                      SwipeLeftAnimationRoute(
+                                          milliseconds: 200,
+                                          widget: LoginScreen()));
+                                },
+                              ),
+                            ],
+                          )
+                          // Container(
+                          //   width: size.width,
+                          //   height: size.height * 0.6,
+                          //   padding: EdgeInsets.symmetric(
+                          //       vertical: size.height * verticalPadding),
+                          //   child: Column(
+                          //     children: [
+                          //       Expanded(
+                          //         child: GridView.builder(
+                          //             itemCount: images.length,
+                          //             gridDelegate:
+                          //                 SliverGridDelegateWithFixedCrossAxisCount(
+                          //               crossAxisCount: 6,
+                          //               crossAxisSpacing: size.width * 0.03,
+                          //               mainAxisSpacing: size.height * 0.015,
+                          //               // childAspectRatio: 0.63,
+                          //               childAspectRatio:
+                          //                   size.width / (size.height * 0.9),
+                          //             ),
+                          //             shrinkWrap: false,
+                          //             scrollDirection: Axis.vertical,
+                          //             physics: ScrollPhysics(),
+                          //             itemBuilder: (_, index) {
+                          //               return Container(
+                          //                   child: Image.asset(images[index]));
+                          //             }),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ]),
+                ]),
+          ),
         ),
       ),
     );

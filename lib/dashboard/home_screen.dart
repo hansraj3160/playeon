@@ -3,6 +3,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:playeon/auth/api_controller.dart';
+import 'package:playeon/dashboard/profile.dart';
 import 'package:playeon/dashboard/searchscreen.dart';
 import 'package:playeon/dashboard/show_all.dart';
 import 'package:playeon/models/movies_model.dart';
@@ -220,6 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     User? userdata = Provider.of<UserProvider>(context).user;
+    var movies = Provider.of<MoviesGenraProvider>(context).moviesGenra;
     return Stack(
       children: [
         SafeArea(
@@ -242,14 +244,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: textColor1,
                       ),
                     ),
-                    Container(
-                      height: size.height * 0.03,
-                      width: size.height * 0.03,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Image.network(
-                          userdata!.profilePicture!,
-                          fit: BoxFit.cover,
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            SwipeLeftAnimationRoute(
+                                milliseconds: 200, widget: Profile()));
+                      },
+                      child: Container(
+                        height: size.height * 0.03,
+                        width: size.height * 0.03,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.network(
+                            userdata!.profilePicture!,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     )
@@ -267,15 +277,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   items: List.generate(
                       itemImages.length,
-                      (index) => Container(
-                            width: size.width * 0.6,
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10.0),
-                                child: Image.asset(itemImages[index],
-                                    fit: BoxFit.fill)),
+                      (index) => InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  SwipeLeftAnimationRoute(
+                                      milliseconds: 200,
+                                      widget: About(
+                                        movieData: movies[index],
+                                      )));
+                            },
+                            child: Container(
+                              width: size.width * 0.6,
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  child: Image.network(
+                                      movies[index].imgLgPoster!,
+                                      fit: BoxFit.cover)),
+                            ),
                           )),
                   carouselController: _controller,
-                  
                 ),
                 SizedBox(
                   height: size.height * 0.04,
@@ -318,12 +339,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
+
                 Container(
                   width: size.width,
                   height: size.height * 0.22,
+                  padding: EdgeInsets.symmetric(
+                      vertical: size.height * verticalPadding),
                   child: Row(
                     children: [
                       Expanded(
@@ -344,7 +365,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           )));
                                 },
                                 child: Container(
-                                    height: size.height * 0.08,
+                                    height: size.height * 0.1,
                                     width: size.width * 0.3,
                                     padding: EdgeInsets.only(left: 10),
                                     decoration: BoxDecoration(
@@ -354,7 +375,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
                                           moviesData[index].imgSmPoster!,
-                                          fit: BoxFit.fill),
+                                          fit: BoxFit.cover),
                                     )),
                               );
                             }),
@@ -362,9 +383,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: size.height * 0.03,
-                ),
+
                 Row(
                   children: [
                     Expanded(
@@ -446,9 +465,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: size.height * 0.03,
-                ),
+
                 Row(
                   children: [
                     Expanded(
@@ -487,12 +504,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
+
                 Container(
                   width: size.width,
                   height: size.height * 0.22,
+                  padding: EdgeInsets.symmetric(
+                      vertical: size.height * verticalPadding),
                   child: Row(
                     children: [
                       Expanded(
@@ -513,7 +530,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           )));
                                 },
                                 child: Container(
-                                    height: size.height * 0.08,
+                                    height: size.height * 0.1,
                                     width: size.width * 0.3,
                                     padding: EdgeInsets.only(left: 10),
                                     decoration: BoxDecoration(
@@ -523,7 +540,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
                                           actionList[index].imgSmPoster!,
-                                          fit: BoxFit.fill),
+                                          fit: BoxFit.cover),
                                     )),
                               );
                             }),
@@ -531,9 +548,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: size.height * 0.03,
-                ),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -572,12 +587,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
+
                 Container(
                   width: size.width,
                   height: size.height * 0.22,
+                  padding: EdgeInsets.symmetric(
+                      vertical: size.height * verticalPadding),
                   child: Row(
                     children: [
                       Expanded(
@@ -598,7 +613,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           )));
                                 },
                                 child: Container(
-                                    height: size.height * 0.08,
+                                    height: size.height * 0.1,
                                     width: size.width * 0.3,
                                     padding: EdgeInsets.only(left: 10),
                                     decoration: BoxDecoration(
@@ -608,7 +623,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
                                           dramasList[index].imgSmPoster!,
-                                          fit: BoxFit.fill),
+                                          fit: BoxFit.cover),
                                     )),
                               );
                             }),
@@ -616,9 +631,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: size.height * 0.03,
-                ),
+
                 Row(
                   children: [
                     Expanded(
@@ -656,12 +669,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
+                // SizedBox(
+                //   height: size.height * 0.02,
+                // ),
                 Container(
                   width: size.width,
                   height: size.height * 0.22,
+                  padding: EdgeInsets.symmetric(
+                      vertical: size.height * verticalPadding),
                   child: Row(
                     children: [
                       Expanded(
@@ -682,7 +697,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           )));
                                 },
                                 child: Container(
-                                    height: size.height * 0.08,
+                                    height: size.height * 0.1,
                                     width: size.width * 0.3,
                                     padding: EdgeInsets.only(left: 10),
                                     decoration: BoxDecoration(
@@ -692,7 +707,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
                                           comediesList[index].imgSmPoster!,
-                                          fit: BoxFit.fill),
+                                          fit: BoxFit.cover),
                                     )),
                               );
                             }),
@@ -700,9 +715,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: size.height * 0.03,
-                ),
+                // SizedBox(
+                //   height: size.height * 0.03,
+                // ),
                 Row(
                   children: [
                     Expanded(
@@ -740,12 +755,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
+                // SizedBox(
+                //   height: size.height * 0.02,
+                // ),
                 Container(
                   width: size.width,
                   height: size.height * 0.22,
+                  padding: EdgeInsets.symmetric(
+                      vertical: size.height * verticalPadding),
                   child: Row(
                     children: [
                       Expanded(
@@ -766,7 +783,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           )));
                                 },
                                 child: Container(
-                                    height: size.height * 0.08,
+                                    height: size.height * 0.1,
                                     width: size.width * 0.3,
                                     padding: EdgeInsets.only(left: 10),
                                     decoration: BoxDecoration(
@@ -776,7 +793,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
                                           Sci[index].imgSmPoster!,
-                                          fit: BoxFit.fill),
+                                          fit: BoxFit.cover),
                                     )),
                               );
                             }),
@@ -784,9 +801,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: size.height * 0.03,
-                ),
+                // SizedBox(
+                //   height: size.height * 0.03,
+                // ),
                 // Row(
                 //   children: [
                 //     Expanded(
@@ -886,12 +903,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
+                // SizedBox(
+                //   height: size.height * 0.02,
+                // ),
                 Container(
                   width: size.width,
                   height: size.height * 0.22,
+                  padding: EdgeInsets.symmetric(
+                      vertical: size.height * verticalPadding),
                   child: Row(
                     children: [
                       Expanded(
@@ -912,7 +931,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           )));
                                 },
                                 child: Container(
-                                    height: size.height * 0.08,
+                                    height: size.height * 0.1,
                                     width: size.width * 0.3,
                                     padding: EdgeInsets.only(left: 10),
                                     decoration: BoxDecoration(
@@ -922,7 +941,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
                                           romanticList[index].imgSmPoster!,
-                                          fit: BoxFit.fill),
+                                          fit: BoxFit.cover),
                                     )),
                               );
                             }),
@@ -930,9 +949,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: size.height * 0.03,
-                ),
+                // SizedBox(
+                //   height: size.height * 0.03,
+                // ),
                 Row(
                   children: [
                     Expanded(
@@ -970,12 +989,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
+                // SizedBox(
+                //   height: size.height * 0.02,
+                // ),
                 Container(
                   width: size.width,
                   height: size.height * 0.22,
+                  padding: EdgeInsets.symmetric(
+                      vertical: size.height * verticalPadding),
                   child: Row(
                     children: [
                       Expanded(
@@ -996,7 +1017,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           )));
                                 },
                                 child: Container(
-                                    height: size.height * 0.08,
+                                    height: size.height * 0.1,
                                     width: size.width * 0.3,
                                     padding: EdgeInsets.only(left: 10),
                                     decoration: BoxDecoration(
@@ -1006,7 +1027,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
                                           horror[index].imgSmPoster!,
-                                          fit: BoxFit.fill),
+                                          fit: BoxFit.cover),
                                     )),
                               );
                             }),

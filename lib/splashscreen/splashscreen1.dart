@@ -14,7 +14,9 @@ import 'package:provider/provider.dart';
 
 import '../auth/api_controller.dart';
 import '../main_screen.dart';
+import '../models/movies_model.dart';
 import '../models/user_model.dart';
+import '../provider/filter_movies.dart';
 import '../provider/user_provider.dart';
 import '../services/local_preference_controller.dart';
 
@@ -26,6 +28,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  List<MoviesModel> moviesData = [];
+
   @override
   void initState() {
     proced();
@@ -52,7 +56,8 @@ class _SplashScreenState extends State<SplashScreen> {
         await Provider.of<UserProvider>(context, listen: false).setUSer(user);
         LocalPreference prefs = LocalPreference();
         await prefs.setUserToken(token);
-        Navigator.pushReplacement(context,
+        await getMovies(token);
+        await Navigator.pushReplacement(context,
             SwipeLeftAnimationRoute(milliseconds: 200, widget: MainScreen()));
       } else {
         Fluttertoast.showToast(
@@ -65,6 +70,16 @@ class _SplashScreenState extends State<SplashScreen> {
               SwipeLeftAnimationRoute(
                   milliseconds: 300, widget: LoginScreen())));
     }
+  }
+
+  getMovies(String token) async {
+    var response = await ApiController().getMovies(token);
+
+    for (var item in response) {
+      moviesData.add(MoviesModel.fromJson(item));
+    }
+    Provider.of<MoviesGenraProvider>(context, listen: false)
+        .setMovies(moviesData);
   }
 
   @override
@@ -103,3 +118,4 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+

@@ -5,7 +5,9 @@ import 'package:playeon/services/local_preference_controller.dart';
 import 'package:playeon/main_screen.dart';
 import 'package:playeon/widgets/style.dart';
 import 'package:provider/provider.dart';
+import '../models/movies_model.dart';
 import '../models/user_model.dart';
+import '../provider/filter_movies.dart';
 import '../provider/user_provider.dart';
 import '../widgets/common.dart';
 import 'SignupScreen.dart';
@@ -23,6 +25,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  List<MoviesModel> moviesData = [];
   bool isValid = false;
   bool isLoading = false;
   setLoading(bool loading) {
@@ -66,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
         String token = response['msg'];
         print("Before jwtdecode $token");
         Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-
+        await getMovies(token);
         print(decodedToken['userId']);
         User user = User.fromJson(decodedToken['userId']);
         await Provider.of<UserProvider>(context, listen: false).setUSer(user);
@@ -80,6 +83,16 @@ class _LoginScreenState extends State<LoginScreen> {
             msg: response['msg'], toastLength: Toast.LENGTH_SHORT);
       }
     }
+  }
+
+  getMovies(String token) async {
+    var response = await ApiController().getMovies(token);
+
+    for (var item in response) {
+      moviesData.add(MoviesModel.fromJson(item));
+    }
+    Provider.of<MoviesGenraProvider>(context, listen: false)
+        .setMovies(moviesData);
   }
 
   Widget build(BuildContext context) {

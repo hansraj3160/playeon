@@ -3,7 +3,7 @@ import 'package:playeon/models/movies_model.dart';
 
 class MoviesGenraProvider extends ChangeNotifier {
   List<MoviesModel> actionGenra = [];
-  List<MoviesModel> sci_fiGenra = [];
+  List<MoviesModel> moviesdata = [];
   List<MoviesModel> animeGenra = [];
   List<MoviesModel> funnyGenra = [];
   List<MoviesModel> horrorGenra = [];
@@ -24,7 +24,7 @@ class MoviesGenraProvider extends ChangeNotifier {
   }
 
   setMovies(List<MoviesModel> movie) {
-    moviesGenra = movie;
+    moviesGenra.addAll(movie);
     notifyListeners();
   }
 }

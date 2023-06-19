@@ -97,20 +97,17 @@ class _MainScreenState extends State<MainScreen>
           child: TabBar(
             controller: tabController,
             indicatorColor: primaryColor1,
-            indicator: const BoxDecoration(
-                border:
-                    Border(top: BorderSide(color: primaryColor1, width: 2))),
             tabs: List.generate(mainTab['tabs']!.length, (index) {
               return Tab(
                   child: VariableText(
-                text: mainTab['tabs']![index]['title'],
-                fontcolor: tabController!.index == index
-                    ? primaryColor1
-                    : primaryColorW,
-                fontsize: size.width * 0.025,
-                fontFamily: fontRegular,
-                weight: FontWeight.w500,
-              ));
+                    text: mainTab['tabs']![index]['title'],
+                    fontcolor: tabController!.index == index
+                        ? primaryColor1
+                        : primaryColorW,
+                    fontsize: size.width * 0.025,
+                    fontFamily: fontRegular,
+                    weight: FontWeight.w500,
+                  ));
             }),
           ),
         ),

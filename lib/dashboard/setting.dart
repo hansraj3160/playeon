@@ -127,12 +127,7 @@ class _SettingState extends State<Setting> {
                     color: textColor1,
                     size: 30,
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => About()),
-                    );
-                  }),
+                  onPressed: () {}),
             ),
             SizedBox(
               height: 100,
