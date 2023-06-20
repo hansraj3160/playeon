@@ -168,8 +168,7 @@ class _ProfileState extends State<Profile> {
                                 ),
                               ),
                               VariableText(
-                                text:
-                                    "*******+${userdata.password!.substring(0, 3)}",
+                                text: "************",
                                 fontsize: size.height * 0.02,
                                 fontFamily: fontMedium,
                                 fontcolor: textColor1.withOpacity(0.8),
