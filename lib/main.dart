@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:playeon/provider/filter_movies.dart';
 import 'package:provider/provider.dart';
 import 'provider/user_provider.dart';
 import 'splashscreen/splashscreen1.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  ));
+
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
-     ChangeNotifierProvider<MoviesGenraProvider>(create: (_) => MoviesGenraProvider()),
+    ChangeNotifierProvider<MoviesGenraProvider>(
+        create: (_) => MoviesGenraProvider()),
   ], child: const MyApp()));
 }
 
@@ -21,7 +27,9 @@ class MyApp extends StatelessWidget {
       title: 'Playeon',
       theme: ThemeData(
         primarySwatch: Colors.green,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+
       home: SplashScreen(),
       // home: MainScreen(),
     );

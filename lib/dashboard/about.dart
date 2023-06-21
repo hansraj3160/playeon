@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:playeon/dashboard/custom_player.dart';
 
 import '../models/movies_model.dart';
 import '../widgets/common.dart';
 import '../widgets/style.dart';
+import 'app.dart';
 import 'player2.dart';
 import 'videoplayer.dart';
 
@@ -186,8 +188,8 @@ class _AboutState extends State<About> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => DefaultPlayer(
-                                    url: widget.movieData!.video!,
+                              builder: (context) => ChewieDemo(
+                                    url: widget.movieData!.video,
                                   )),
                         );
                       },
