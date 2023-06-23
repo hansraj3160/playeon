@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:playeon/dashboard/app.dart';
 import 'package:playeon/models/series_model.dart';
 
 import '../models/movies_model.dart';
@@ -230,7 +231,7 @@ class _SeriesAboutState extends State<SeriesAbout> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => VideoPlayers(
+                                            builder: (context) => ChewieDemo(
                                                 url: widget.movieData!
                                                     .episodes![index].video)),
                                       );
