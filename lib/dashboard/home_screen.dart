@@ -270,11 +270,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 CarouselSlider(
                   options: CarouselOptions(
-                    aspectRatio: 2.9,
-                    autoPlay: true,
-                    enlargeCenterPage: true,
-                    viewportFraction: 0.6,
-                  ),
+                      aspectRatio: 2.5,
+                      autoPlay: true,
+                      enlargeCenterPage: true,
+                      viewportFraction: 0.26,
+                      enlargeFactor: 0.3),
                   items: List.generate(
                       itemImages.length,
                       (index) => InkWell(
@@ -366,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 child: Container(
                                     height: size.height * 0.1,
-                                    width: size.width * 0.3,
+                                    width: size.width * 0.24,
                                     padding: EdgeInsets.only(left: 10),
                                     decoration: BoxDecoration(
                                         borderRadius:
@@ -448,7 +448,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 child: Container(
                                     height: size.height * 0.1,
-                                    width: size.width * 0.3,
+                                    width: size.width * 0.24,
                                     padding: EdgeInsets.only(left: 10),
                                     decoration: BoxDecoration(
                                         borderRadius:
@@ -531,7 +531,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 child: Container(
                                     height: size.height * 0.1,
-                                    width: size.width * 0.3,
+                                    width: size.width * 0.24,
                                     padding: EdgeInsets.only(left: 10),
                                     decoration: BoxDecoration(
                                         borderRadius:
@@ -614,7 +614,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 child: Container(
                                     height: size.height * 0.1,
-                                    width: size.width * 0.3,
+                                    width: size.width * 0.24,
                                     padding: EdgeInsets.only(left: 10),
                                     decoration: BoxDecoration(
                                         borderRadius:
@@ -698,7 +698,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 child: Container(
                                     height: size.height * 0.1,
-                                    width: size.width * 0.3,
+                                    width: size.width * 0.24,
                                     padding: EdgeInsets.only(left: 10),
                                     decoration: BoxDecoration(
                                         borderRadius:
@@ -784,7 +784,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 child: Container(
                                     height: size.height * 0.1,
-                                    width: size.width * 0.3,
+                                    width: size.width * 0.24,
                                     padding: EdgeInsets.only(left: 10),
                                     decoration: BoxDecoration(
                                         borderRadius:
@@ -932,7 +932,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 child: Container(
                                     height: size.height * 0.1,
-                                    width: size.width * 0.3,
+                                    width: size.width * 0.24,
                                     padding: EdgeInsets.only(left: 10),
                                     decoration: BoxDecoration(
                                         borderRadius:
@@ -1018,7 +1018,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 child: Container(
                                     height: size.height * 0.1,
-                                    width: size.width * 0.3,
+                                    width: size.width * 0.24,
                                     padding: EdgeInsets.only(left: 10),
                                     decoration: BoxDecoration(
                                         borderRadius:
