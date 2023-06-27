@@ -210,9 +210,11 @@ class CustomTextField extends StatelessWidget {
   TextInputAction? inputAction;
   TextInputType? inputType;
   bool obscure;
+  int maxLine;
   CustomTextField(
       {Key? key,
       this.cont,
+      this.maxLine = 1,
       this.hintTxt,
       this.fill = false,
       this.obscure = false,
@@ -228,6 +230,7 @@ class CustomTextField extends StatelessWidget {
       obscureText: obscure,
       textInputAction: inputAction,
       keyboardType: inputType,
+      maxLines: maxLine,
       style: TextStyle(
         fontFamily: fontMedium,
         color: textColor1,
@@ -235,7 +238,7 @@ class CustomTextField extends StatelessWidget {
       ),
       decoration: InputDecoration(
         hintText: hintTxt,
-        hintStyle: TextStyle(color: textColor1),
+        hintStyle: TextStyle(color: textColorH),
         enabled: true,
         filled: fill,
         fillColor: backgroundColorB,

@@ -318,6 +318,73 @@ class ApiController {
       return e.toString();
     }
   }
+
+  Future<dynamic> feedback(String userDetails, String feedbackMsg) async {
+    var url = "https://apiv1.playeon.com/api/v1/feedback/";
+    var feedbackData = {
+      {
+        "feedback": {"Message": feedbackMsg}
+      }
+    };
+
+    try {
+      var response = await http
+          .post(Uri.parse(url),
+              headers: {
+                'Content-Type': 'application/json',
+                "Authorization":
+                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDU4ZDUwOWJlZjQzNzgwMTk4MTYzYWIiLCJpYXQiOjE2ODM1NDMzMDUsImV4cCI6MTcxNTA3OTMwNX0.7v-oCZ9tm4bMa9So71987T-Wc7qiPFoL1EcIjUh0pp4'
+              },
+              body: json.encode(feedbackData))
+          .timeout(Duration(seconds: _timeoutDuration), onTimeout: () {
+        throw "Request time out";
+      });
+      if (response.statusCode == 200) {
+        var data = jsonDecode(utf8.decode(response.bodyBytes));
+
+        return data;
+      } else {
+        var statusData = jsonDecode(utf8.decode(response.bodyBytes));
+        return statusData['msg'].toString();
+      }
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  
+  Future<dynamic> requestMovies(String userDetails, String movieRequest) async {
+    var url = "https://apiv1.playeon.com/api/v1/request/";
+    var feedbackData = {
+      {
+        "movieRequest": {"Message": movieRequest}
+      }
+    };
+
+    try {
+      var response = await http
+          .post(Uri.parse(url),
+              headers: {
+                'Content-Type': 'application/json',
+                "Authorization":
+                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDU4ZDUwOWJlZjQzNzgwMTk4MTYzYWIiLCJpYXQiOjE2ODM1NDMzMDUsImV4cCI6MTcxNTA3OTMwNX0.7v-oCZ9tm4bMa9So71987T-Wc7qiPFoL1EcIjUh0pp4'
+              },
+              body: json.encode(feedbackData))
+          .timeout(Duration(seconds: _timeoutDuration), onTimeout: () {
+        throw "Request time out";
+      });
+      if (response.statusCode == 200) {
+        var data = jsonDecode(utf8.decode(response.bodyBytes));
+
+        return data;
+      } else {
+        var statusData = jsonDecode(utf8.decode(response.bodyBytes));
+        return statusData['msg'].toString();
+      }
+    } catch (e) {
+      return e.toString();
+    }
+  }
 }
 
 
