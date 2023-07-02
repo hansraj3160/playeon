@@ -246,7 +246,27 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: textColor1,
                       ),
                     ),
-                    MyPopupMenu(),
+                    // MyPopupMenu(),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            SwipeLeftAnimationRoute(
+                                milliseconds: 200, widget: Profile()));
+                      },
+                      child: SizedBox(
+                        height: size.height * 0.05,
+                        width: size.height * 0.05,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.network(
+                            userdata!.profilePicture!,
+                            scale: 5,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: size.width * 0.04)
                   ],
                 ),
                 SizedBox(
@@ -1152,7 +1172,7 @@ class MyPopupMenu extends StatelessWidget {
     return PopupMenuButton<int>(
       offset: Offset(
         100,
-        35,
+        -20,
       ),
       icon: Icon(
         Icons.more_vert,

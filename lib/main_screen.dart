@@ -79,39 +79,48 @@ class _MainScreenState extends State<MainScreen>
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return WillPopScope(
-      onWillPop: () => onWillPop(),
-      child: Scaffold(
-        backgroundColor: backgroundColor,
-        body: TabBarView(
-          controller: tabController,
-          physics: const NeverScrollableScrollPhysics(),
-          children: const [
-            Series(),
-            HomeScreen(),
-            Profile(),
-          ],
-        ),
-        bottomNavigationBar: Container(
-          height: size.height * 0.08,
-          decoration: BoxDecoration(color: primaryColorB),
-          child: TabBar(
+        onWillPop: () => onWillPop(),
+        child: Scaffold(
+          backgroundColor: backgroundColor,
+          body: TabBarView(
             controller: tabController,
-            indicatorColor: primaryColor1,
-            tabs: List.generate(mainTab['tabs']!.length, (index) {
-              return Tab(
-                  child: VariableText(
-                    text: mainTab['tabs']![index]['title'],
-                    fontcolor: tabController!.index == index
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              Series(),
+              HomeScreen(),
+              // MyPopupMenu(),
+            ],
+          ),
+          bottomNavigationBar: Container(
+            height: size.height * 0.08,
+            decoration: BoxDecoration(color: primaryColorB),
+            child: TabBar(
+                controller: tabController,
+                indicatorColor: primaryColor1,
+                tabs: [
+                  Tab(
+                      child: VariableText(
+                    text: mainTab['tabs']![0]['title'],
+                    fontcolor: tabController!.index == 0
                         ? primaryColor1
                         : primaryColorW,
                     fontsize: size.width * 0.025,
                     fontFamily: fontRegular,
                     weight: FontWeight.w500,
-                  ));
-            }),
+                  )),
+                  Tab(
+                      child: VariableText(
+                    text: mainTab['tabs']![1]['title'],
+                    fontcolor: tabController!.index == 1
+                        ? primaryColor1
+                        : primaryColorW,
+                    fontsize: size.width * 0.025,
+                    fontFamily: fontRegular,
+                    weight: FontWeight.w500,
+                  )),
+                  Tab(child: MyPopupMenu())
+                ]),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
