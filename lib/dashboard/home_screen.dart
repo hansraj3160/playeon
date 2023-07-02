@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:playeon/auth/api_controller.dart';
 import 'package:playeon/dashboard/profile.dart';
+import 'package:playeon/dashboard/requestMovie/requestMovie.dart';
 import 'package:playeon/dashboard/searchscreen.dart';
 import 'package:playeon/dashboard/show_all.dart';
 import 'package:playeon/models/movies_model.dart';
@@ -16,6 +17,7 @@ import '../provider/filter_movies.dart';
 import '../provider/user_provider.dart';
 import 'about.dart';
 import '../services/local_preference_controller.dart';
+import 'feedback/feedback.dart';
 
 List<String> itemImages = [
   "assets/images/img_c1.jpg",
@@ -244,25 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: textColor1,
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            SwipeLeftAnimationRoute(
-                                milliseconds: 200, widget: Profile()));
-                      },
-                      child: Container(
-                        height: size.height * 0.03,
-                        width: size.height * 0.03,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Image.network(
-                            userdata!.profilePicture!,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    )
+                    MyPopupMenu(),
                   ],
                 ),
                 SizedBox(
@@ -1158,6 +1142,58 @@ class _HomeScreenState extends State<HomeScreen> {
           color: isSelected ? Colors.black : Colors.grey,
         ),
       ),
+    );
+  }
+}
+
+class MyPopupMenu extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton<int>(
+      offset: Offset(
+        100,
+        35,
+      ),
+      icon: Icon(
+        Icons.more_vert,
+        color: primaryColorW,
+      ),
+      itemBuilder: (BuildContext context) {
+        return [
+          PopupMenuItem(
+            value: 1,
+            child: Text('Movie Request'),
+          ),
+          PopupMenuItem(
+            value: 2,
+            child: Text('Feedback'),
+          ),
+          PopupMenuItem(
+            value: 3,
+            child: Text('Profile'),
+          ),
+        ];
+      },
+      onSelected: (value) {
+        switch (value) {
+          case 1:
+            Navigator.push(
+                context,
+                SwipeLeftAnimationRoute(
+                    milliseconds: 200, widget: RequestMovieScreen()));
+            break;
+          case 2:
+            Navigator.push(
+                context,
+                SwipeLeftAnimationRoute(
+                    milliseconds: 200, widget: FeedbackScreen()));
+            break;
+          case 3:
+            Navigator.push(context,
+                SwipeLeftAnimationRoute(milliseconds: 200, widget: Profile()));
+            break;
+        }
+      },
     );
   }
 }

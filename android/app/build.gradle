@@ -47,15 +47,7 @@ android {
         applicationId "com.example.playeon"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-<<<<<<< HEAD
-<<<<<<< HEAD
         minSdkVersion 21 //flutter.minSdkVersion
-=======
-        minSdkVersion 21//flutter.minSdkVersion
->>>>>>> d8ec0e3 (working on feedback)
-=======
-        minSdkVersion 21//flutter.minSdkVersion
->>>>>>> d8ec0e3 (working on feedback)
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

@@ -285,29 +285,57 @@ class _ProfileState extends State<Profile> {
                               ),
                             ],
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              MyButton(
-                                btnHeight: size.height * 0.055,
-                                btnWidth: size.width * 0.70,
-                                btnTxt: "Feedback",
-                                btnColor: Colors.white,
-                                btnRadius: 25,
-                                borderColor: textColor1,
-                                txtColor: textColor5,
-                                fontSize: 15,
-                                onTap: () async {
-                                 
-                                  await Navigator.push(
-                                      context,
-                                      SwipeLeftAnimationRoute(
-                                          milliseconds: 200,
-                                          widget: LoginScreen()));
-                                },
-                              ),
-                            ],
-                          )
+
+                          SizedBox(
+                            height: size.height * 0.01,
+                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+                          //     MyButton(
+                          //       btnHeight: size.height * 0.055,
+                          //       btnWidth: size.width * 0.70,
+                          //       btnTxt: "Feedback",
+                          //       btnColor: Colors.white,
+                          //       btnRadius: 25,
+                          //       borderColor: textColor1,
+                          //       txtColor: textColor5,
+                          //       fontSize: 15,
+                          //       onTap: () async {
+                          //         await Navigator.push(
+                          //             context,
+                          //             SwipeLeftAnimationRoute(
+                          //                 milliseconds: 200,
+                          //                 widget: FeedbackScreen()));
+                          //       },
+                          //     ),
+                          //   ],
+                          // ),
+                          // SizedBox(
+                          //   height: size.height * 0.01,
+                          // ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+                          //     MyButton(
+                          //       btnHeight: size.height * 0.055,
+                          //       btnWidth: size.width * 0.70,
+                          //       btnTxt: "Movie Request",
+                          //       btnColor: Colors.white,
+                          //       btnRadius: 25,
+                          //       borderColor: textColor1,
+                          //       txtColor: textColor5,
+                          //       fontSize: 15,
+                          //       onTap: () async {
+                          //         await Navigator.push(
+                          //             context,
+                          //             SwipeLeftAnimationRoute(
+                          //                 milliseconds: 200,
+                          //                 widget: RequestMovieScreen()));
+                          //       },
+                          //     ),
+                          //   ],
+                          // )
                           // Container(
                           //   width: size.width,
                           //   height: size.height * 0.6,
