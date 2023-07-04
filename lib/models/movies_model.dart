@@ -1,61 +1,77 @@
 class MoviesModel {
-	String? sId;
-	String? title;
-	String? description;
-	String? year;
-	String? type;
-	String? duration;
-	String? imgLgPoster;
-	String? imgSmPoster;
-	String? trailer;
-	String? video;
-	String? video480;
-	String? video720;
-	int? views;
-	String? genre;
-	int? likes;
-int? dislikes;
-	int? watchlater;
+  String? sId;
+  String? title;
+  String? description;
+  String? year;
+  String? type;
+  String? duration;
+  String? imgLgPoster;
+  String? imgSmPoster;
+  String? trailer;
+  String? video;
+  String? video480;
+  String? video720;
+  int? views;
+  String? genre;
+  int? likes;
+  int? dislikes;
+  int? watchlater;
 
+  MoviesModel({
+    this.sId,
+    this.title,
+    this.description,
+    this.year,
+    this.type,
+    this.duration,
+    this.imgLgPoster,
+    this.imgSmPoster,
+    this.trailer,
+    this.video,
+    this.video480,
+    this.video720,
+    this.views,
+    this.genre,
+    this.likes,
+    this.dislikes,
+    this.watchlater,
+  });
 
-	MoviesModel({this.sId, this.title, this.description, this.year, this.type, this.duration, this.imgLgPoster, this.imgSmPoster, this.trailer, this.video, this.video480, this.video720, this.views, this.genre, this.likes, this.dislikes, this.watchlater, });
-
-	MoviesModel.fromJson(Map<String, dynamic> json) {
-		sId = json['_id'];
-		title = json['title'];
-		description = json['description'];
-		year = json['year'];
-		type = json['type'];
-		duration = json['duration'];
-		imgLgPoster = json['imgLgPoster'];
-                   		imgSmPoster = json['imgSmPoster']; 
-		trailer = json['trailer'];
-		video = json['video'];
-		video480 = json['video480'];
-		video720 = json['video720'];
-		views = json['views'];
+  MoviesModel.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    title = json['title'];
+    description = json['description'];
+    year = json['year'];
+    type = json['type'];
+    duration = json['duration'];
+    imgLgPoster = json['imgLgPoster'];
+    imgSmPoster = json['imgSmPoster'];
+    trailer = json['trailer'];
+    video = json['video'];
+    video480 = json['video480'];
+    video720 = json['video720'];
+    views = json['views'];
 // genre=json['genre'][0];
-		// if (json['genre'] != null) {
-		// 	genre = <Genre>[];
-		// 	json['genre'].forEach((v) { genre!.add( Genre.fromJson(v)); });
-		// }
-		// if (json['likes'] != null) {
-		// 	likes = <int>[];
-		// 	json['likes'].forEach((v) { likes!.add(new .fromJson(v)); });
-		// }
-		// if (json['dislikes'] != null) {
-		// 	dislikes = <Null>[];
-		// 	json['dislikes'].forEach((v) { dislikes!.add(new Null.fromJson(v)); });
-		// }
-		// if (json['watchlater'] != null) {
-		// 	watchlater = <Null>[];
-		// 	json['watchlater'].forEach((v) { watchlater!.add(new Null.fromJson(v)); });
-		// }
-		// createdAt = json['createdAt'];
-		// updatedAt = json['updatedAt'];
-		// iV = json['__v'];
-	}
-  
+    // if (json['genre'] != null) {
+    // 	genre = <Genre>[];
+    // 	json['genre'].forEach((v) { genre!.add( Genre.fromJson(v)); });
+    // }
+    // if (json['likes'] != null) {
+    // 	likes = <int>[];
+    // 	json['likes'].forEach((v) { likes!.add(new .fromJson(v)); });
+    // }
+    // if (json['dislikes'] != null) {
+    // 	dislikes = <Null>[];
+    // 	json['dislikes'].forEach((v) { dislikes!.add(new Null.fromJson(v)); });
+    // }
+    // if (json['watchlater'] != null) {
+    // 	watchlater = <Null>[];
+    // 	json['watchlater'].forEach((v) { watchlater!.add(new Null.fromJson(v)); });
+    // }
+    // createdAt = json['createdAt'];
+    // updatedAt = json['updatedAt'];
+    // iV = json['__v'];
+  }
 
 // 	Map<String, dynamic> toJson() {
 // 		final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -89,7 +105,7 @@ int? dislikes;
 // 		data['__v'] = this.iV;
 // 		return data;
 // 	}
- }
+}
 
 // class Genre {
 

@@ -96,11 +96,12 @@ class _ProfileState extends State<Profile> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              CircleAvatar(
-                                radius: 60,
-                                backgroundImage:
-                                    NetworkImage(userdata!.profilePicture!),
-                                backgroundColor: backgroundColor,
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.network(
+                                  userdata!.profilePicture!,
+                                  scale: 3,
+                                ),
                               ),
                             ],
                           ),

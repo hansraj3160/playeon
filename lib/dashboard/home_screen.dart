@@ -378,7 +378,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                          moviesData[index].imgSmPoster!,
+                                          moviesData[index].imgLgPoster!,
                                           fit: BoxFit.cover),
                                     )),
                               );
@@ -460,7 +460,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                          thrillerList[index].imgSmPoster!,
+                                          thrillerList[index].imgLgPoster!,
                                           fit: BoxFit.cover),
                                     )),
                               );
@@ -543,7 +543,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                          actionList[index].imgSmPoster!,
+                                          actionList[index].imgLgPoster!,
                                           fit: BoxFit.cover),
                                     )),
                               );
@@ -626,7 +626,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                          dramasList[index].imgSmPoster!,
+                                          dramasList[index].imgLgPoster!,
                                           fit: BoxFit.cover),
                                     )),
                               );
@@ -710,7 +710,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                          comediesList[index].imgSmPoster!,
+                                          comediesList[index].imgLgPoster!,
                                           fit: BoxFit.cover),
                                     )),
                               );
@@ -796,7 +796,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                          Sci[index].imgSmPoster!,
+                                          Sci[index].imgLgPoster!,
                                           fit: BoxFit.cover),
                                     )),
                               );
@@ -805,70 +805,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                // SizedBox(
-                //   height: size.height * 0.03,
-                // ),
-                // Row(
-                //   children: [
-                //     Expanded(
-                //       child: VariableText(
-                //         text: "Kids Cartoon",
-                //         fontcolor: primaryColorW,
-                //         fontsize: size.height * 0.02,
-                //         fontFamily: fontMedium,
-                //         weight: FontWeight.w500,
-                //       ),
-                //     ),
-                //     InkWell(
-                //       onTap: () => Navigator.push(
-                //           context,
-                //           SwipeLeftAnimationRoute(
-                //               milliseconds: 300,
-                //               widget: ShowAllMovies(
-                //                   showList: moviesData, title: "Cartoons"))),
-                //       child: Row(
-                //         children: [
-                //           VariableText(
-                //             text: "See All",
-                //             fontcolor: primaryColorW,
-                //             fontsize: size.height * 0.016,
-                //             fontFamily: fontMedium,
-                //             weight: FontWeight.w500,
-                //           ),
-                //           const Icon(
-                //             Icons.arrow_forward_ios,
-                //             color: primaryColorW,
-                //             size: 17,
-                //           )
-                //         ],
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                // SizedBox(
-                //   height: size.height * 0.02,
-                // ),
-                // Container(
-                //   width: size.width,
-                //   height: size.height * 0.18,
-                //   child: Row(
-                //     children: [
-                //       Expanded(
-                //         child: ListView.builder(
-                //             itemCount: kid.length,
-                //             shrinkWrap: false,
-                //             scrollDirection: Axis.horizontal,
-                //             physics: ScrollPhysics(),
-                //             itemBuilder: (_, index) {
-                //               return Container(
-                //                 padding: EdgeInsets.only(right: 1),
-                //                 // child: Image.asset(kid[index])
-                //               );
-                //             }),
-                //       )
-                //     ],
-                //   ),
-                // ),
+
                 Row(
                   children: [
                     Expanded(
@@ -944,7 +881,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                          romanticList[index].imgSmPoster!,
+                                          romanticList[index].imgLgPoster!,
                                           fit: BoxFit.cover),
                                     )),
                               );
@@ -1030,7 +967,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                          horror[index].imgSmPoster!,
+                                          horror[index].imgLgPoster!,
                                           fit: BoxFit.cover),
                                     )),
                               );
@@ -1039,106 +976,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                // Row(
-                //   children: [
-                //     Expanded(
-                //       child: VariableText(
-                //         text: "Adventure",
-                //         fontcolor: primaryColorW,
-                //         fontsize: size.height * 0.02,
-                //         fontFamily: fontMedium,
-                //         weight: FontWeight.w500,
-                //       ),
-                //     ),
-                //     InkWell(
-                //       onTap: () => Navigator.push(
-                //           context,
-                //           SwipeLeftAnimationRoute(
-                //               milliseconds: 300,
-                //               widget: ShowAllMovies(
-                //                   showList: moviesData,
-                //                   title: "Adventure Movies"))),
-                //       child: Row(
-                //         children: [
-                //           VariableText(
-                //             text: "See All",
-                //             fontcolor: primaryColorW,
-                //             fontsize: size.height * 0.016,
-                //             fontFamily: fontMedium,
-                //             weight: FontWeight.w500,
-                //           ),
-                //           const Icon(
-                //             Icons.arrow_forward_ios,
-                //             color: primaryColorW,
-                //             size: 17,
-                //           )
-                //         ],
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                // SizedBox(
-                //   height: size.height * 0.02,
-                // ),
-                // Container(
-                //   width: size.width,
-                //   height: size.height * 0.18,
-                //   child: Row(
-                //     children: [
-                //       Expanded(
-                //         child: ListView.builder(
-                //             itemCount: adv.length,
-                //             shrinkWrap: false,
-                //             scrollDirection: Axis.horizontal,
-                //             physics: ScrollPhysics(),
-                //             itemBuilder: (_, index) {
-                //               return Container(
-                //                 padding: EdgeInsets.only(right: 1),
-                //                 // child: Image.asset(adv[index])
-                //               );
-                //             }),
-                //       )
-                //     ],
-                //   ),
-                // ),
-                // Row(
-                //   children: [
-                //     Expanded(
-                //       child: VariableText(
-                //         text: "Animated Movies",
-                //         fontcolor: primaryColorW,
-                //         fontsize: size.height * 0.02,
-                //         fontFamily: fontMedium,
-                //         weight: FontWeight.w500,
-                //       ),
-                //     ),
-                //     InkWell(
-                //       onTap: () => Navigator.push(
-                //           context,
-                //           SwipeLeftAnimationRoute(
-                //               milliseconds: 300,
-                //               widget: ShowAllMovies(
-                //                   showList: moviesData,
-                //                   title: "Animated Movies"))),
-                //       child: Row(
-                //         children: [
-                //           VariableText(
-                //             text: "See All",
-                //             fontcolor: primaryColorW,
-                //             fontsize: size.height * 0.016,
-                //             fontFamily: fontMedium,
-                //             weight: FontWeight.w500,
-                //           ),
-                //           const Icon(
-                //             Icons.arrow_forward_ios,
-                //             color: primaryColorW,
-                //             size: 17,
-                //           )
-                //         ],
-                //       ),
-                //     ),
-                //   ],
-                // ),
+
                 SizedBox(
                   height: size.height * 0.02,
                 ),
@@ -1170,6 +1008,7 @@ class MyPopupMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<int>(
+      color: primaryColorB,
       offset: Offset(
         100,
         -20,
@@ -1182,15 +1021,16 @@ class MyPopupMenu extends StatelessWidget {
         return [
           PopupMenuItem(
             value: 1,
-            child: Text('Movie Request'),
+            child:
+                Text('Movie Request', style: TextStyle(color: primaryColorW)),
           ),
           PopupMenuItem(
             value: 2,
-            child: Text('Feedback'),
+            child: Text('Feedback', style: TextStyle(color: primaryColorW)),
           ),
           PopupMenuItem(
             value: 3,
-            child: Text('Profile'),
+            child: Text('Profile', style: TextStyle(color: primaryColorW)),
           ),
         ];
       },
