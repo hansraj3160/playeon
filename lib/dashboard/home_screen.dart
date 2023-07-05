@@ -296,7 +296,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10.0),
                                   child: Image.network(
-                                      movies[index].imgLgPoster!,
+                                      movies[index].imgSmPoster!,
                                       fit: BoxFit.cover)),
                             ),
                           )),
@@ -378,7 +378,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                          moviesData[index].imgLgPoster!,
+                                          moviesData[index].imgSmPoster!,
                                           fit: BoxFit.cover),
                                     )),
                               );
@@ -460,7 +460,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                          thrillerList[index].imgLgPoster!,
+                                          thrillerList[index].imgSmPoster!,
                                           fit: BoxFit.cover),
                                     )),
                               );
@@ -543,7 +543,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                          actionList[index].imgLgPoster!,
+                                          actionList[index].imgSmPoster!,
                                           fit: BoxFit.cover),
                                     )),
                               );
@@ -626,7 +626,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                          dramasList[index].imgLgPoster!,
+                                          dramasList[index].imgSmPoster!,
                                           fit: BoxFit.cover),
                                     )),
                               );
@@ -710,7 +710,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                          comediesList[index].imgLgPoster!,
+                                          comediesList[index].imgSmPoster!,
                                           fit: BoxFit.cover),
                                     )),
                               );
@@ -796,7 +796,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                          Sci[index].imgLgPoster!,
+                                          Sci[index].imgSmPoster!,
                                           fit: BoxFit.cover),
                                     )),
                               );
@@ -881,7 +881,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                          romanticList[index].imgLgPoster!,
+                                          romanticList[index].imgSmPoster!,
                                           fit: BoxFit.cover),
                                     )),
                               );
@@ -930,9 +930,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                // SizedBox(
-                //   height: size.height * 0.02,
-                // ),
+
                 Container(
                   width: size.width,
                   height: size.height * 0.22,
@@ -967,7 +965,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                          horror[index].imgLgPoster!,
+                                          horror[index].imgSmPoster!,
                                           fit: BoxFit.cover),
                                     )),
                               );

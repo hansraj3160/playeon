@@ -35,6 +35,33 @@ class ApiController {
     }
   }
 
+  Future<dynamic> logOutAccount(String userDetails) async {
+    var url = "https://apiv1.playeon.com/api/v1/auth/logout/";
+
+    try {
+      var response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization":
+              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDU4ZDUwOWJlZjQzNzgwMTk4MTYzYWIiLCJpYXQiOjE2ODM1NDMzMDUsImV4cCI6MTcxNTA3OTMwNX0.7v-oCZ9tm4bMa9So71987T-Wc7qiPFoL1EcIjUh0pp4'
+        },
+      ).timeout(Duration(seconds: _timeoutDuration), onTimeout: () {
+        throw "Request time out";
+      });
+      if (response.statusCode == 200) {
+        var data = jsonDecode(utf8.decode(response.bodyBytes));
+
+        return data;
+      } else {
+        var statusData = jsonDecode(utf8.decode(response.bodyBytes));
+        return statusData['msg'].toString();
+      }
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
   //! user Create
   Future<dynamic> trailUserCreate(UserModel userDetails) async {
     var url = "https://apiv1.playeon.com/api/v1/signup/trial";
@@ -352,7 +379,6 @@ class ApiController {
     }
   }
 
-  
   Future<dynamic> requestMovies(String userDetails, String movieRequest) async {
     var url = "https://apiv1.playeon.com/api/v1/request/";
     var feedbackData = {

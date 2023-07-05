@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:playeon/auth/api_controller.dart';
 import 'package:playeon/auth/login_screen.dart';
 import 'package:playeon/dashboard/about.dart';
 import 'package:playeon/services/local_preference_controller.dart';
@@ -144,6 +145,7 @@ class _SettingState extends State<Setting> {
                 fontSize: 20,
                 onTap: () async {
                   LocalPreference pref = LocalPreference();
+                  ApiController().logOutAccount(await pref.getUserToken());
                   await pref.removeUser();
                   await Navigator.push(
                       context,

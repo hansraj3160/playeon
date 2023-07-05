@@ -31,7 +31,7 @@ class _MainScreenState extends State<MainScreen>
   void initState() {
     super.initState();
     tabController = TabController(
-        length: 3,
+        length: 2,
         animationDuration: const Duration(milliseconds: 200),
         initialIndex: 1,
         vsync: this);
@@ -91,35 +91,44 @@ class _MainScreenState extends State<MainScreen>
               // MyPopupMenu(),
             ],
           ),
-          bottomNavigationBar: Container(
-            height: size.height * 0.08,
-            decoration: BoxDecoration(color: primaryColorB),
-            child: TabBar(
-                controller: tabController,
-                indicatorColor: primaryColor1,
-                tabs: [
-                  Tab(
-                      child: VariableText(
-                    text: mainTab['tabs']![0]['title'],
-                    fontcolor: tabController!.index == 0
-                        ? primaryColor1
-                        : primaryColorW,
-                    fontsize: size.width * 0.025,
-                    fontFamily: fontRegular,
-                    weight: FontWeight.w500,
-                  )),
-                  Tab(
-                      child: VariableText(
-                    text: mainTab['tabs']![1]['title'],
-                    fontcolor: tabController!.index == 1
-                        ? primaryColor1
-                        : primaryColorW,
-                    fontsize: size.width * 0.025,
-                    fontFamily: fontRegular,
-                    weight: FontWeight.w500,
-                  )),
-                  Tab(child: MyPopupMenu())
-                ]),
+          bottomNavigationBar: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Container(
+                  height: size.height * 0.08,
+                  decoration: BoxDecoration(color: primaryColorB),
+                  child: TabBar(
+                      controller: tabController,
+                      indicatorColor: primaryColor1,
+                      indicatorSize: TabBarIndicatorSize.label,
+                      tabs: [
+                        Tab(
+                            child: VariableText(
+                          text: mainTab['tabs']![0]['title'],
+                          fontcolor: tabController!.index == 0
+                              ? primaryColor1
+                              : primaryColorW,
+                          fontsize: size.width * 0.025,
+                          fontFamily: fontRegular,
+                          weight: FontWeight.w500,
+                        )),
+                        Tab(
+                            child: VariableText(
+                          text: mainTab['tabs']![1]['title'],
+                          fontcolor: tabController!.index == 1
+                              ? primaryColor1
+                              : primaryColorW,
+                          fontsize: size.width * 0.025,
+                          fontFamily: fontRegular,
+                          weight: FontWeight.w500,
+                        )),
+                        // Tab(child: MyPopupMenu())
+                      ]),
+                ),
+              ),
+              MyPopupMenu()
+            ],
           ),
         ));
   }

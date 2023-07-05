@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:playeon/models/movies_model.dart';
 
+import '../models/series_model.dart';
+
 class MoviesGenraProvider extends ChangeNotifier {
   List<MoviesModel> actionGenra = [];
   List<MoviesModel> moviesdata = [];
@@ -12,6 +14,7 @@ class MoviesGenraProvider extends ChangeNotifier {
   List<MoviesModel> thrillerGenra = [];
   List<MoviesModel> cartoonGenra = [];
   List<MoviesModel> moviesGenra = [];
+  List<SeriesModel> seriesData = [];
 
   setFilterGenra(List<MoviesModel> lst) {
     for (var movies in lst) {
@@ -24,7 +27,14 @@ class MoviesGenraProvider extends ChangeNotifier {
   }
 
   setMovies(List<MoviesModel> movie) {
+    moviesGenra.clear();
     moviesGenra.addAll(movie);
+    notifyListeners();
+  }
+
+  setSeries(List<SeriesModel> series) {
+    seriesData.clear();
+    seriesData.addAll(series);
     notifyListeners();
   }
 }
