@@ -1,23 +1,32 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:playeon/dashboard/about.dart';
 import 'package:playeon/dashboard/series_about.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import '../auth/api_controller.dart';
+import '../models/movies_model.dart';
 import '../models/series_model.dart';
 import '../provider/filter_movies.dart';
 import '../widgets/common.dart';
 import '../widgets/style.dart';
 
 import '../services/local_preference_controller.dart';
+import 'movies_screen.dart';
+import 'searchscreen.dart';
 
-class Series extends StatefulWidget {
-  const Series({super.key});
+class HomeMoviesScreen extends StatefulWidget {
+  const HomeMoviesScreen({super.key});
 
   @override
-  State<Series> createState() => _SeriesState();
+  State<HomeMoviesScreen> createState() => _HomeMoviesScreenState();
 }
 
-class _SeriesState extends State<Series> {
+class _HomeMoviesScreenState extends State<HomeMoviesScreen> {
+  int currentIndex = 0;
+  String? categoryController;
+  CarouselController _controller = CarouselController();
+
   @override
   bool isLoading = false;
   setLoading(bool loading) {
@@ -26,37 +35,36 @@ class _SeriesState extends State<Series> {
     });
   }
 
-  List<SeriesModel> moviesDat = [];
-  void updateList(String value) {}
-  getSeriesData() async {
+  List<MoviesModel> moviesDat = [];
+
+  @override
+  void initState() {
+    getMovies();
+    super.initState();
+  }
+
+  getMovies() async {
     var movies =
-        Provider.of<MoviesGenraProvider>(context, listen: false).seriesData;
+        Provider.of<MoviesGenraProvider>(context, listen: false).homeMovies;
     if (movies.isEmpty) {
       setLoading(true);
       LocalPreference prefs = LocalPreference();
       String token = await prefs.getUserToken();
-      var response = await ApiController().getSeries(token);
-
+      var response = await ApiController().getMovies(token);
+//
+      // print(" form api $response");
       for (var item in response) {
-        moviesDat.add(SeriesModel.fromJson(item));
+        moviesDat.add(MoviesModel.fromJson(item));
       }
       Provider.of<MoviesGenraProvider>(context, listen: false)
-          .setSeries(moviesDat);
+          .setHomeMovies(moviesDat);
       setLoading(false);
     }
   }
 
-  @override
-  void initState() {
-    getSeriesData();
-    super.initState();
-  }
-
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    var moviesData =
-        Provider.of<MoviesGenraProvider>(context, listen: false).seriesData;
-
+    var moviesData = Provider.of<MoviesGenraProvider>(context).homeMovies;
     return SafeArea(
       child: Stack(
         children: [
@@ -67,6 +75,91 @@ class _SeriesState extends State<Series> {
                 children: [
                   SizedBox(
                     height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Row(
+                          children: [
+                            SizedBox(width: size.width * 0.04),
+                            Image.asset(
+                              "assets/icons/logo.png",
+                              scale: 2,
+                            ),
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              SwipeLeftAnimationRoute(
+                                  milliseconds: 200, widget: searchscreen()));
+                        },
+                        icon: Icon(
+                          Icons.search,
+                          color: textColor1,
+                        ),
+                      ),
+                      // MyPopupMenu(),
+                      // InkWell(
+                      //   onTap: () {
+                      //     Navigator.push(
+                      //         context,
+                      //         SwipeLeftAnimationRoute(
+                      //             milliseconds: 200, widget: Profile()));
+                      //   },
+                      //   child: SizedBox(
+                      //     height: size.height * 0.05,
+                      //     width: size.height * 0.05,
+                      //     child: ClipRRect(
+                      //       borderRadius: BorderRadius.circular(8),
+                      //       child: Image.network(
+                      //         userdata!.profilePicture!,
+                      //         scale: 5,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      SizedBox(width: size.width * 0.04)
+                    ],
+                  ),
+                  SizedBox(
+                    height: size.height * 0.02,
+                  ),
+                  CarouselSlider(
+                    options: CarouselOptions(
+                        aspectRatio: 2.1,
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                        viewportFraction: 0.31,
+                        enlargeFactor: 0.3),
+                    items: List.generate(
+                        itemImages.length,
+                        (index) => InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    SwipeLeftAnimationRoute(
+                                        milliseconds: 200,
+                                        widget: About(
+                                          movieData: moviesData[index],
+                                        )));
+                              },
+                              child: Container(
+                                width: size.width * 0.6,
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    child: Image.network(
+                                        moviesData[index].imgSmPoster!,
+                                        fit: BoxFit.cover)),
+                              ),
+                            )),
+                    carouselController: _controller,
+                  ),
+                  SizedBox(
+                    height: size.height * 0.04,
                   ),
                   Padding(
                     padding: EdgeInsets.only(
@@ -137,7 +230,7 @@ class _SeriesState extends State<Series> {
                                   itemCount: moviesData.length,
                                   gridDelegate:
                                       SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 4,
+                                    crossAxisCount: 3,
                                     crossAxisSpacing: size.width * 0.03,
                                     mainAxisSpacing: size.height * 0.015,
                                     // childAspectRatio: 0.63,
@@ -154,7 +247,7 @@ class _SeriesState extends State<Series> {
                                             context,
                                             SwipeLeftAnimationRoute(
                                                 milliseconds: 200,
-                                                widget: SeriesAbout(
+                                                widget: About(
                                                   movieData: moviesData[index],
                                                 )));
                                       },

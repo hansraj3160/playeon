@@ -65,15 +65,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // print("Get $response");
       if (response['status']) {
-        setLoading(false);
         String token = response['msg'];
-        print("Before jwtdecode $token");
+
         Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
         await getMovies(token);
         print(decodedToken['userId']);
         User user = User.fromJson(decodedToken['userId']);
         await Provider.of<UserProvider>(context, listen: false).setUSer(user);
         LocalPreference prefs = LocalPreference();
+        setLoading(false);
         await prefs.setUserToken(token);
         Navigator.pushReplacement(context,
             SwipeLeftAnimationRoute(milliseconds: 200, widget: MainScreen()));
@@ -100,6 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Stack(
       children: [
         Scaffold(
+          backgroundColor: primaryColorW,
           body: SafeArea(
             child: Stack(
               children: [
@@ -113,111 +114,119 @@ class _LoginScreenState extends State<LoginScreen> {
                   "assets/images/login_img2.png",
                   fit: BoxFit.cover,
                 )),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: size.height * 0.016,
-                      horizontal: size.width * 0.1),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "assets/icons/logo.png",
+                      scale: 1.8,
+                    ),
+                  ],
+                ),
+                Center(
+                  child: Container(
+                    width: size.width * 0.9,
+                    decoration: BoxDecoration(
+                        color: primaryColorB.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(6)),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: size.height * 0.020,
+                          horizontal: size.width * 0.1),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Column(
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               VariableText(
                                 text: "LOGIN NOW",
                                 fontcolor: textColor1,
-                                fontsize: size.height * 0.032,
-                                fontFamily: fontExtraBold,
-                                weight: FontWeight.w700,
-                                textAlign: TextAlign.center,
-                              ),
-                              SizedBox(
-                                height: size.height * 0.01,
-                              ),
-                              VariableText(
-                                text: "And Enjoy Endless",
-                                fontcolor: textColor1,
                                 fontsize: size.height * 0.016,
-                                fontFamily: fontExtraBold,
+                                fontFamily: fontSemiBold,
                                 weight: FontWeight.w500,
-                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: size.height * 0.05,
+                          ),
+                          //!User Name
+                          CustomTextField2(
+                            cont: usernameController,
+                            hintTxt: "Enter Your Email",
+                            fill: true,
+                          ),
+                          SizedBox(
+                            height: size.height * 0.02,
+                          ),
+                          //!password
+                          CustomPasswordField2(
+                            cont: passwordController,
+                            hintTxt: "Enter Your Password",
+                            fill: true,
+                          ),
+                          SizedBox(
+                            height: size.height * 0.05,
+                          ),
+                          MyButton(
+                            btnHeight: size.height * 0.055,
+                            btnWidth: size.width,
+                            btnTxt: "Login",
+                            btnColor: primaryColor1.withOpacity(0.8),
+                            btnRadius: 6,
+                            borderColor: primaryColor1.withOpacity(0.8),
+                            txtColor: textColor1,
+                            fontSize: 15,
+                            onTap: () {
+                              loginUser();
+                            },
+                          ),
+                          SizedBox(
+                            height: size.height * 0.03,
+                          ),
+                          Divider(
+                            thickness: 1.3,
+                            color: textColorH,
+                          ),
+                          SizedBox(
+                            height: size.height * 0.03,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              VariableText(
+                                text: "Don't have an account? ",
+                                fontsize: size.height * 0.016,
+                                fontcolor: textColor1,
+                                weight: FontWeight.w400,
+                                fontFamily: fontRegular,
+                                underlined: true,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      SwipeLeftAnimationRoute(
+                                          milliseconds: 200,
+                                          widget: const SignupScreen()));
+                                },
+                                child: VariableText(
+                                  text: "Create Now",
+                                  fontsize: size.height * 0.016,
+                                  fontcolor: textColor1,
+                                  weight: FontWeight.w600,
+                                  fontFamily: fontSemiBold,
+                                  underlined: true,
+                                ),
                               ),
                             ],
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: size.height * 0.05,
-                      ),
-                      //!User Name
-                      CustomTextField(
-                        cont: usernameController,
-                        hintTxt: "Enter Your Email",
-                        fill: true,
-                      ),
-                      SizedBox(
-                        height: size.height * 0.02,
-                      ),
-                      //!password
-                      CustomPasswordField(
-                        cont: passwordController,
-                        hintTxt: "Enter Your Password",
-                        fill: true,
-                      ),
-                      SizedBox(
-                        height: size.height * 0.05,
-                      ),
-                      MyButton(
-                        btnHeight: size.height * 0.055,
-                        btnWidth: size.width,
-                        btnTxt: "Login",
-                        btnColor: fillColor2,
-                        btnRadius: 10,
-                        borderColor: borderColor,
-                        txtColor: textColor2,
-                        fontSize: 20,
-                        onTap: () {
-                          loginUser();
-                        },
-                      ),
-                      SizedBox(
-                        height: size.height * 0.03,
-                      ),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          VariableText(
-                            text: "Don't have an account? ",
-                            fontsize: size.height * 0.016,
-                            fontcolor: textColor1,
-                            weight: FontWeight.w400,
-                            fontFamily: fontRegular,
-                            underlined: true,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  SwipeLeftAnimationRoute(
-                                      milliseconds: 200,
-                                      widget: const SignupScreen()));
-                            },
-                            child: VariableText(
-                              text: "Create Now",
-                              fontsize: size.height * 0.016,
-                              fontcolor: textColor1,
-                              weight: FontWeight.w600,
-                              fontFamily: fontSemiBold,
-                              underlined: true,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ],

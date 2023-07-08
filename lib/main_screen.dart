@@ -1,11 +1,11 @@
 import 'dart:io';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:playeon/widgets/common.dart';
 
-import 'dashboard/home_screen.dart';
-import 'dashboard/profile.dart';
-import 'dashboard/searchscreen.dart';
+import 'dashboard/home_movies.dart';
+import 'dashboard/movies_screen.dart';
 import 'dashboard/series.dart';
 import 'widgets/style.dart';
 
@@ -21,9 +21,9 @@ class _MainScreenState extends State<MainScreen>
   TabController? tabController;
   var mainTab = {
     "tabs": [
-      {"title": "Series"},
       {"title": "Movies"},
-      {"title": "Profile"}
+      {"title": "Home"},
+      {"title": "Series"},
     ],
   };
 
@@ -31,8 +31,8 @@ class _MainScreenState extends State<MainScreen>
   void initState() {
     super.initState();
     tabController = TabController(
-        length: 2,
-        animationDuration: const Duration(milliseconds: 200),
+        length: 3,
+        animationDuration: const Duration(milliseconds: 400),
         initialIndex: 1,
         vsync: this);
     tabController!.addListener(handleTabSelection);
@@ -84,10 +84,13 @@ class _MainScreenState extends State<MainScreen>
           backgroundColor: backgroundColor,
           body: TabBarView(
             controller: tabController,
+            dragStartBehavior: DragStartBehavior.start,
             physics: const NeverScrollableScrollPhysics(),
             children: [
-              Series(),
               HomeScreen(),
+              HomeMoviesScreen(),
+              Series(),
+
               // MyPopupMenu(),
             ],
           ),
@@ -96,8 +99,8 @@ class _MainScreenState extends State<MainScreen>
             children: [
               Expanded(
                 child: Container(
-                  height: size.height * 0.08,
-                  decoration: BoxDecoration(color: primaryColorB),
+                  height: size.height * 0.06,
+                  decoration: BoxDecoration(color: backgroundColor),
                   child: TabBar(
                       controller: tabController,
                       indicatorColor: primaryColor1,
@@ -109,9 +112,9 @@ class _MainScreenState extends State<MainScreen>
                           fontcolor: tabController!.index == 0
                               ? primaryColor1
                               : primaryColorW,
-                          fontsize: size.width * 0.025,
-                          fontFamily: fontRegular,
-                          weight: FontWeight.w500,
+                          fontsize: size.height * 0.014,
+                          fontFamily: fontMedium,
+                          weight: FontWeight.w600,
                         )),
                         Tab(
                             child: VariableText(
@@ -119,15 +122,27 @@ class _MainScreenState extends State<MainScreen>
                           fontcolor: tabController!.index == 1
                               ? primaryColor1
                               : primaryColorW,
-                          fontsize: size.width * 0.025,
-                          fontFamily: fontRegular,
-                          weight: FontWeight.w500,
+                          fontsize: size.height * 0.014,
+                          fontFamily: fontMedium,
+                          weight: FontWeight.w600,
                         )),
+
+                        Tab(
+                            child: VariableText(
+                          text: mainTab['tabs']![2]['title'],
+                          fontcolor: tabController!.index == 2
+                              ? primaryColor1
+                              : primaryColorW,
+                          fontsize: size.height * 0.014,
+                          fontFamily: fontMedium,
+                          weight: FontWeight.w600,
+                        )),
+
                         // Tab(child: MyPopupMenu())
                       ]),
                 ),
               ),
-              MyPopupMenu()
+              Container(color: backgroundColor, child: MyPopupMenu())
             ],
           ),
         ));

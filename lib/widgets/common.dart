@@ -251,6 +251,57 @@ class CustomTextField extends StatelessWidget {
   }
 }
 
+class CustomTextField2 extends StatelessWidget {
+  TextEditingController? cont;
+  String? hintTxt;
+  bool fill;
+  TextInputAction? inputAction;
+  TextInputType? inputType;
+  bool obscure;
+  int maxLine;
+  CustomTextField2(
+      {Key? key,
+      this.cont,
+      this.maxLine = 1,
+      this.hintTxt,
+      this.fill = false,
+      this.obscure = false,
+      this.inputAction = TextInputAction.next,
+      this.inputType = TextInputType.text})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    return TextFormField(
+      controller: cont,
+      obscureText: obscure,
+      textInputAction: inputAction,
+      keyboardType: inputType,
+      maxLines: maxLine,
+      style: TextStyle(
+        fontFamily: fontMedium,
+        color: textColor1,
+        fontSize: size.height * 0.018,
+      ),
+      decoration: InputDecoration(
+        hintText: hintTxt,
+        hintStyle: TextStyle(
+          color: textColorH,
+          fontSize: size.height * 0.018,
+        ),
+        enabled: true,
+        filled: fill,
+        hintMaxLines: maxLine,
+        fillColor: backgroundColorB,
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 2, color: primaryColor1),
+        ),
+      ),
+    );
+  }
+}
+
 class CustomPasswordField extends StatefulWidget {
   TextEditingController? cont;
   String? hintTxt;
@@ -288,7 +339,9 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
       ),
       decoration: InputDecoration(
         hintText: widget.hintTxt,
-        hintStyle: TextStyle(color: textColor1),
+        hintStyle: TextStyle(
+          color: textColorH,
+        ),
         enabled: true,
         filled: widget.fill,
         fillColor: backgroundColorB,
@@ -310,6 +363,74 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
         suffixIconConstraints: const BoxConstraints(),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: textColor1),
+        ),
+      ),
+    );
+  }
+}
+
+class CustomPasswordField2 extends StatefulWidget {
+  TextEditingController? cont;
+  String? hintTxt;
+  bool fill;
+  TextInputAction? inputAction;
+  TextInputType? inputType;
+  bool obscure;
+  CustomPasswordField2(
+      {Key? key,
+      this.cont,
+      this.hintTxt,
+      this.fill = false,
+      this.obscure = true,
+      this.inputAction = TextInputAction.next,
+      this.inputType = TextInputType.text})
+      : super(key: key);
+
+  @override
+  State<CustomPasswordField2> createState() => _CustomPasswordField2State();
+}
+
+class _CustomPasswordField2State extends State<CustomPasswordField2> {
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    return TextFormField(
+      controller: widget.cont,
+      obscureText: widget.obscure,
+      textInputAction: widget.inputAction,
+      keyboardType: widget.inputType,
+      style: TextStyle(
+        fontFamily: fontMedium,
+        color: textColor1,
+        fontSize: size.height * 0.018,
+      ),
+      decoration: InputDecoration(
+        hintText: widget.hintTxt,
+        hintStyle: TextStyle(
+          color: textColorH,
+          fontSize: size.height * 0.018,
+        ),
+        enabled: true,
+        filled: widget.fill,
+        fillColor: backgroundColorB,
+        suffixIcon: InkWell(
+          onTap: () {
+            setState(() {
+              widget.obscure = !widget.obscure;
+            });
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: widget.obscure
+                ? Image.asset("assets/icons/ic_password_show.png",
+                    color: textColorH, scale: 2)
+                : Image.asset("assets/icons/ic_password_hide.png",
+                    color: textColorH, scale: 2),
+          ),
+        ),
+        suffixIconConstraints: const BoxConstraints(),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(width: 2, color: primaryColor1),
         ),
       ),
     );

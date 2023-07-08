@@ -3,6 +3,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:playeon/auth/api_controller.dart';
+import 'package:playeon/auth/user_model.dart';
 import 'package:playeon/dashboard/profile.dart';
 import 'package:playeon/dashboard/requestMovie/requestMovie.dart';
 import 'package:playeon/dashboard/searchscreen.dart';
@@ -12,6 +13,7 @@ import 'package:playeon/widgets/common.dart';
 import 'package:playeon/widgets/style.dart';
 import 'package:provider/provider.dart';
 
+import '../auth/login_screen.dart';
 import '../models/user_model.dart';
 import '../provider/filter_movies.dart';
 import '../provider/user_provider.dart';
@@ -232,8 +234,19 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.only(top: 5.0, left: 5),
               child: Column(children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          SizedBox(width: size.width * 0.04),
+                          Image.asset(
+                            "assets/icons/logo.png",
+                            scale: 2,
+                          ),
+                        ],
+                      ),
+                    ),
                     IconButton(
                       onPressed: () {
                         Navigator.push(
@@ -247,25 +260,25 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     // MyPopupMenu(),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            SwipeLeftAnimationRoute(
-                                milliseconds: 200, widget: Profile()));
-                      },
-                      child: SizedBox(
-                        height: size.height * 0.05,
-                        width: size.height * 0.05,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.network(
-                            userdata!.profilePicture!,
-                            scale: 5,
-                          ),
-                        ),
-                      ),
-                    ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     Navigator.push(
+                    //         context,
+                    //         SwipeLeftAnimationRoute(
+                    //             milliseconds: 200, widget: Profile()));
+                    //   },
+                    //   child: SizedBox(
+                    //     height: size.height * 0.05,
+                    //     width: size.height * 0.05,
+                    //     child: ClipRRect(
+                    //       borderRadius: BorderRadius.circular(8),
+                    //       child: Image.network(
+                    //         userdata!.profilePicture!,
+                    //         scale: 5,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(width: size.width * 0.04)
                   ],
                 ),
@@ -1005,42 +1018,249 @@ class _HomeScreenState extends State<HomeScreen> {
 class MyPopupMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    User? user = Provider.of<UserProvider>(context).user;
     return PopupMenuButton<int>(
-      color: primaryColorB,
-      offset: Offset(
-        100,
-        -20,
-      ),
-      icon: Icon(
-        Icons.more_vert,
-        color: primaryColorW,
+      color: primaryColorB.withOpacity(0.8),
+      padding: EdgeInsets.only(bottom: 100),
+      offset: Offset(0, -303),
+      // offset: Offset(
+      //   1400,
+      //   330,
+      // ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 14),
+        child: Container(
+          color: primaryColorB,
+          height: size.height * 0.05,
+          width: size.height * 0.05,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Image.network(
+              user!.profilePicture!,
+              scale: 5,
+            ),
+          ),
+        ),
       ),
       itemBuilder: (BuildContext context) {
         return [
           PopupMenuItem(
             value: 1,
-            child:
-                Text('Movie Request', style: TextStyle(color: primaryColorW)),
+            child: Row(
+              children: [
+                SizedBox(
+                  height: size.height * 0.04,
+                  width: size.height * 0.04,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(6),
+                    child: Image.network(
+                      user.profilePicture!,
+                      scale: 5,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 14,
+                ),
+                VariableText(
+                  text: user.name,
+                  fontcolor: primaryColorW,
+                  fontsize: size.height * 0.016,
+                  fontFamily: fontMedium,
+                  weight: FontWeight.w500,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+              ],
+            ),
           ),
           PopupMenuItem(
             value: 2,
-            child: Text('Feedback', style: TextStyle(color: primaryColorW)),
+            child: Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      color: primaryColorW.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(6)),
+                  height: size.height * 0.04,
+                  width: size.height * 0.04,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: Icon(
+                        Icons.card_giftcard,
+                        color: textColorH,
+                        size: 12,
+                      )),
+                ),
+                SizedBox(
+                  width: 14,
+                ),
+                VariableText(
+                  text: "Giveaways (0)",
+                  fontcolor: primaryColorW,
+                  fontsize: size.height * 0.016,
+                  fontFamily: fontMedium,
+                  weight: FontWeight.w500,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+              ],
+            ),
           ),
           PopupMenuItem(
             value: 3,
-            child: Text('Profile', style: TextStyle(color: primaryColorW)),
+            child: Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      color: primaryColorW.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(6)),
+                  height: size.height * 0.04,
+                  width: size.height * 0.04,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: Icon(
+                        Icons.volunteer_activism,
+                        color: textColorH,
+                        size: 12,
+                      )),
+                ),
+                SizedBox(
+                  width: 14,
+                ),
+                VariableText(
+                  text: "Donate Now (0)",
+                  fontcolor: primaryColorW,
+                  fontsize: size.height * 0.016,
+                  fontFamily: fontMedium,
+                  weight: FontWeight.w500,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+              ],
+            ),
+          ),
+          PopupMenuItem(
+            value: 4,
+            child: Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      color: primaryColorW.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(6)),
+                  height: size.height * 0.04,
+                  width: size.height * 0.04,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: Icon(
+                        Icons.movie,
+                        color: textColorH,
+                        size: 12,
+                      )),
+                ),
+                SizedBox(
+                  width: 14,
+                ),
+                VariableText(
+                  text: "Request Movies",
+                  fontcolor: primaryColorW,
+                  fontsize: size.height * 0.016,
+                  fontFamily: fontMedium,
+                  weight: FontWeight.w500,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+              ],
+            ),
+          ),
+          PopupMenuItem(
+            value: 5,
+            child: Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      color: primaryColorW.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(6)),
+                  height: size.height * 0.04,
+                  width: size.height * 0.04,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: Icon(
+                        Icons.rss_feed,
+                        color: textColorH,
+                        size: 12,
+                      )),
+                ),
+                SizedBox(
+                  width: 14,
+                ),
+                VariableText(
+                  text: "Feedback",
+                  fontcolor: primaryColorW,
+                  fontsize: size.height * 0.016,
+                  fontFamily: fontMedium,
+                  weight: FontWeight.w500,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+              ],
+            ),
+          ),
+          PopupMenuItem(
+            value: 6,
+            child: Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      color: primaryColorW.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(6)),
+                  height: size.height * 0.04,
+                  width: size.height * 0.04,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: Icon(
+                        Icons.logout,
+                        color: primaryColorW,
+                        size: 12,
+                      )),
+                ),
+                SizedBox(
+                  width: 14,
+                ),
+                VariableText(
+                  text: "Logout",
+                  fontcolor: textColorH,
+                  fontsize: size.height * 0.016,
+                  fontFamily: fontMedium,
+                  weight: FontWeight.w500,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+              ],
+            ),
           ),
         ];
       },
       onSelected: (value) {
         switch (value) {
           case 1:
+            Navigator.push(context,
+                SwipeLeftAnimationRoute(milliseconds: 200, widget: Profile()));
+            break;
+          case 4:
             Navigator.push(
                 context,
                 SwipeLeftAnimationRoute(
                     milliseconds: 200, widget: RequestMovieScreen()));
             break;
-          case 2:
+          case 5:
             Navigator.push(
                 context,
                 SwipeLeftAnimationRoute(
@@ -1049,6 +1269,15 @@ class MyPopupMenu extends StatelessWidget {
           case 3:
             Navigator.push(context,
                 SwipeLeftAnimationRoute(milliseconds: 200, widget: Profile()));
+            break;
+          case 6:
+            LocalPreference pref = LocalPreference();
+            pref.removeUser();
+            Navigator.push(
+                context,
+                SwipeLeftAnimationRoute(
+                    milliseconds: 200, widget: LoginScreen()));
+
             break;
         }
       },

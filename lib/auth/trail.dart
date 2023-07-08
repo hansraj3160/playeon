@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:playeon/dashboard/home_screen.dart';
+import 'package:playeon/dashboard/movies_screen.dart';
 import 'package:playeon/main_screen.dart';
 
 import '../widgets/common.dart';

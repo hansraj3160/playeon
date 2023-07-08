@@ -1,14 +1,11 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:playeon/dashboard/videoplayer.dart';
-import 'package:video_player/video_player.dart';
+
 
 import '../widgets/common.dart';
 import '../widgets/style.dart';
 
 class IntroductionPage extends StatelessWidget {
-  String? image;
+  final String? image;
   IntroductionPage({super.key, this.image});
 
   @override
@@ -27,7 +24,7 @@ class IntroductionPage extends StatelessWidget {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: Icon(
+                      child:const Icon(
                         Icons.arrow_back,
                         color: Colors.black,
                         size: 30,

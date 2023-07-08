@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:playeon/widgets/style.dart';
 import 'package:video_player/video_player.dart';
 
+import '../theme.dart';
+
 class ChewieDemo extends StatefulWidget {
   String? url;
 
@@ -24,16 +26,20 @@ class _ChewieDemoState extends State<ChewieDemo> {
   double _volumeValue = 0.5;
   bool _isFullScreen = false;
   bool isshowbar = false;
+  late VideoPlayerController _videoPlayerController2;
+
+  int? bufferDelay;
+
   @override
   void initState() {
     super.initState();
-    _platform = TargetPlatform.iOS;
-    if (_isFullScreen) {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    } else {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-          overlays: SystemUiOverlay.values);
-    }
+    _platform = TargetPlatform.android;
+    // if (_isFullScreen) {
+    //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+    // } else {
+    //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+    //       overlays: SystemUiOverlay.values);
+    // }
     // if (Platform.isAndroid) {
     //   setState(() {
     //     _platform = TargetPlatform.android;
@@ -50,14 +56,18 @@ class _ChewieDemoState extends State<ChewieDemo> {
   @override
   void dispose() {
     _videoPlayerController1.dispose();
+    _videoPlayerController2.dispose();
     _chewieController?.dispose();
     super.dispose();
   }
 
   Future<void> initializePlayer() async {
     _videoPlayerController1 = VideoPlayerController.network(widget.url!);
+
+    _videoPlayerController2 = VideoPlayerController.network(widget.url!);
     await Future.wait([
       _videoPlayerController1.initialize(),
+      _videoPlayerController2.initialize(),
     ]);
     _createChewieController();
     setState(() {});
@@ -84,12 +94,18 @@ class _ChewieDemoState extends State<ChewieDemo> {
       zoomAndPan: true,
       autoPlay: true,
       looping: true,
+      progressIndicatorDelay:
+          bufferDelay != null ? Duration(milliseconds: bufferDelay!) : null,
       fullScreenByDefault: true,
       showControls: true,
       autoInitialize: true,
+      allowFullScreen: true,
+      maxScale: 2.5,
+      hideControlsTimer: const Duration(seconds: 4),
+      controlsSafeAreaMinimum: EdgeInsets.all(0),
       subtitle: Subtitles(subtitles),
       subtitleBuilder: (context, dynamic subtitle) => Container(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(1.0),
         child: subtitle is InlineSpan
             ? RichText(
                 text: subtitle,
@@ -139,29 +155,23 @@ class _ChewieDemoState extends State<ChewieDemo> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: AppTheme.light.copyWith(
+        platform: _platform ?? Theme.of(context).platform,
+      ),
       home: Scaffold(
         backgroundColor: primaryColorB,
-        body: Center(
-          child: Stack(
-            children: <Widget>[
-              Center(
+        body: Column(
+          children: <Widget>[
+            Expanded(
+              child: Center(
                 child: _chewieController != null &&
                         _chewieController!
                             .videoPlayerController.value.isInitialized
-                    ? _isFullScreen
-                        ? Chewie(
-                            controller: _chewieController!,
-                          )
-                        : InkWell(
-                            onTap: () {
-                              setState(() {
-                                isshowbar = !isshowbar;
-                              });
-                            },
-                            child: Chewie(
-                              controller: _chewieController!,
-                            ),
-                          )
+                    ? SafeArea(
+                        child: Chewie(
+                          controller: _chewieController!,
+                        ),
+                      )
                     : Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -171,84 +181,8 @@ class _ChewieDemoState extends State<ChewieDemo> {
                         ],
                       ),
               ),
-              SizedBox(height: 20),
-              // Padding(
-              //   padding: const EdgeInsets.all(25.0),
-              //   child: isshowbar
-              //       ? Align(
-              //           alignment: Alignment.bottomCenter,
-              //           child: Row(
-              //             mainAxisAlignment: MainAxisAlignment.center,
-              //             children: [
-              //               IconButton(
-              //                 icon: Icon(
-              //                   Icons.replay_10,
-              //                   color: primaryColorW,
-              //                 ),
-              //                 onPressed: () {
-              //                   seekBackward(Duration(seconds: 10));
-              //                 },
-              //               ),
-              //               IconButton(
-              //                 icon: Icon(
-              //                   Icons.forward_10,
-              //                   color: primaryColorW,
-              //                 ),
-              //                 onPressed: () {
-              //                   seekForward(Duration(seconds: 10));
-              //                 },
-              //               ),
-              //             ],
-              //           ),
-              //         )
-              //       : null,
-              // ),
-              // SizedBox(
-              //     child: isshowbar
-              //         ? Padding(
-              //             padding: const EdgeInsets.all(16.0),
-              //             child: Align(
-              //                 alignment: Alignment.centerRight,
-              //                 child: Container(
-              //                   width: 10,
-              //                   child: RotatedBox(
-              //                     quarterTurns: 3,
-              //                     child: Row(
-              //                       mainAxisSize: MainAxisSize.min,
-              //                       children: [
-              //                         Icon(Icons.volume_up,
-              //                             color: primaryColor1, size: 15),
-              //                         SliderTheme(
-              //                           data: const SliderThemeData(
-              //                             activeTrackColor: primaryColor1,
-              //                             thumbColor: primaryColor1,
-              //                             overlayShape: RoundSliderOverlayShape(
-              //                                 overlayRadius: 5.0),
-              //                             tickMarkShape:
-              //                                 RoundSliderTickMarkShape(
-              //                                     tickMarkRadius: 1.0),
-              //                             thumbShape: RoundSliderThumbShape(
-              //                               enabledThumbRadius: 4.0,
-              //                             ),
-              //                           ),
-              //                           child: Slider(
-              //                             value: _volumeValue,
-              //                             min: 0.0,
-              //                             max: 1.0,
-              //                             onChanged: (value) {
-              //                               setVolume(value);
-              //                             },
-              //                             label: "Volume",
-              //                           ),
-              //                         ),
-              //                       ],
-              //                     ),
-              //                   ),
-              //                 )),
-              //           )
-              //         : null),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

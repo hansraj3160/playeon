@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LocalPreference {
   static const userToken = "userToken";
   static const crediantial = "data";
+  
   setUserToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(userToken, token);

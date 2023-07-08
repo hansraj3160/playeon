@@ -14,6 +14,7 @@ class MoviesGenraProvider extends ChangeNotifier {
   List<MoviesModel> thrillerGenra = [];
   List<MoviesModel> cartoonGenra = [];
   List<MoviesModel> moviesGenra = [];
+  List<MoviesModel> homeMovies = [];
   List<SeriesModel> seriesData = [];
 
   setFilterGenra(List<MoviesModel> lst) {
@@ -29,6 +30,12 @@ class MoviesGenraProvider extends ChangeNotifier {
   setMovies(List<MoviesModel> movie) {
     moviesGenra.clear();
     moviesGenra.addAll(movie);
+    notifyListeners();
+  }
+
+  setHomeMovies(List<MoviesModel> movie) {
+    homeMovies.clear();
+    homeMovies.addAll(movie);
     notifyListeners();
   }
 

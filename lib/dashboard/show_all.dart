@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../models/movies_model.dart';
 import '../widgets/common.dart';
 import '../widgets/style.dart';
-import 'Introduction.dart';
+import 'introduction.dart';
 import 'about.dart';
 
 class ShowAllMovies extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../dashboard/home_screen.dart';
+import '../dashboard/movies_screen.dart';
 import '../widgets/common.dart';
 import '../widgets/style.dart';
 
