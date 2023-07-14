@@ -46,7 +46,7 @@ class _RequestMovieScreenState extends State<RequestMovieScreen> {
           Scaffold(
             backgroundColor: primaryColorB,
             appBar: AppBar(
-              backgroundColor: primaryColor1,
+              backgroundColor: primaryColorB,
               title: VariableText(
                 text: "Movie Request",
                 fontcolor: primaryColorW,
@@ -60,6 +60,7 @@ class _RequestMovieScreenState extends State<RequestMovieScreen> {
                   horizontal: size.width * horizontalPadding,
                   vertical: size.height * verticalPadding),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
                     height: size.height * 0.01,

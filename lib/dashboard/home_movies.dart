@@ -1,18 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:playeon/dashboard/about.dart';
-import 'package:playeon/dashboard/series_about.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import '../auth/api_controller.dart';
 import '../models/movies_model.dart';
-import '../models/series_model.dart';
 import '../provider/filter_movies.dart';
 import '../widgets/common.dart';
 import '../widgets/style.dart';
 
 import '../services/local_preference_controller.dart';
-import 'movies_screen.dart';
 import 'searchscreen.dart';
 
 class HomeMoviesScreen extends StatefulWidget {
@@ -125,42 +122,42 @@ class _HomeMoviesScreenState extends State<HomeMoviesScreen> {
                       SizedBox(width: size.width * 0.04)
                     ],
                   ),
-                  SizedBox(
-                    height: size.height * 0.02,
-                  ),
-                  CarouselSlider(
-                    options: CarouselOptions(
-                        aspectRatio: 2.1,
-                        autoPlay: true,
-                        enlargeCenterPage: true,
-                        viewportFraction: 0.31,
-                        enlargeFactor: 0.3),
-                    items: List.generate(
-                        itemImages.length,
-                        (index) => InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    SwipeLeftAnimationRoute(
-                                        milliseconds: 200,
-                                        widget: About(
-                                          movieData: moviesData[index],
-                                        )));
-                              },
-                              child: Container(
-                                width: size.width * 0.6,
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    child: Image.network(
-                                        moviesData[index].imgSmPoster!,
-                                        fit: BoxFit.cover)),
-                              ),
-                            )),
-                    carouselController: _controller,
-                  ),
-                  SizedBox(
-                    height: size.height * 0.04,
-                  ),
+                  // SizedBox(
+                  //   height: size.height * 0.02,
+                  // ),
+                  // CarouselSlider(
+                  //   options: CarouselOptions(
+                  //       aspectRatio: 2.1,
+                  //       autoPlay: true,
+                  //       enlargeCenterPage: true,
+                  //       viewportFraction: 0.31,
+                  //       enlargeFactor: 0.3),
+                  //   items: List.generate(
+                  //       itemImages.length,
+                  //       (index) => InkWell(
+                  //             onTap: () {
+                  //               Navigator.push(
+                  //                   context,
+                  //                   SwipeLeftAnimationRoute(
+                  //                       milliseconds: 200,
+                  //                       widget: About(
+                  //                         movieData: moviesData[index],
+                  //                       )));
+                  //             },
+                  //             child: Container(
+                  //               width: size.width * 0.6,
+                  //               child: ClipRRect(
+                  //                   borderRadius: BorderRadius.circular(10.0),
+                  //                   child: Image.network(
+                  //                       moviesData[index].imgSmPoster!,
+                  //                       fit: BoxFit.cover)),
+                  //             ),
+                  //           )),
+                  //   carouselController: _controller,
+                  // ),
+                  // SizedBox(
+                  //   height: size.height * 0.04,
+                  // ),
                   Padding(
                     padding: EdgeInsets.only(
                       left: 10,
@@ -173,7 +170,7 @@ class _HomeMoviesScreenState extends State<HomeMoviesScreen> {
                               itemCount: moviesData.length,
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
+                                crossAxisCount: 4,
                                 crossAxisSpacing: size.width * 0.03,
                                 mainAxisSpacing: size.height * 0.015,
                                 // childAspectRatio: 0.63,

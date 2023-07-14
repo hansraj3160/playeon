@@ -87,8 +87,9 @@ class _MainScreenState extends State<MainScreen>
             dragStartBehavior: DragStartBehavior.start,
             physics: const NeverScrollableScrollPhysics(),
             children: [
-              HomeScreen(),
               HomeMoviesScreen(),
+              HomeScreen(),
+
               Series(),
 
               // MyPopupMenu(),
@@ -109,9 +110,7 @@ class _MainScreenState extends State<MainScreen>
                         Tab(
                             child: VariableText(
                           text: mainTab['tabs']![0]['title'],
-                          fontcolor: tabController!.index == 0
-                              ? primaryColor1
-                              : primaryColorW,
+                          fontcolor: primaryColorW,
                           fontsize: size.height * 0.014,
                           fontFamily: fontMedium,
                           weight: FontWeight.w600,
@@ -119,9 +118,7 @@ class _MainScreenState extends State<MainScreen>
                         Tab(
                             child: VariableText(
                           text: mainTab['tabs']![1]['title'],
-                          fontcolor: tabController!.index == 1
-                              ? primaryColor1
-                              : primaryColorW,
+                          fontcolor: primaryColorW,
                           fontsize: size.height * 0.014,
                           fontFamily: fontMedium,
                           weight: FontWeight.w600,
@@ -130,9 +127,7 @@ class _MainScreenState extends State<MainScreen>
                         Tab(
                             child: VariableText(
                           text: mainTab['tabs']![2]['title'],
-                          fontcolor: tabController!.index == 2
-                              ? primaryColor1
-                              : primaryColorW,
+                          fontcolor: primaryColorW,
                           fontsize: size.height * 0.014,
                           fontFamily: fontMedium,
                           weight: FontWeight.w600,

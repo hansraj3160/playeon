@@ -35,21 +35,21 @@ class User {
       this.iV});
 
   User.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    name = json['name'];
-    email = json['email'];
-    password = json['password'];
-    username = json['username'];
-    phoneNumber = json['phoneNumber'];
-    country = json['country'];
-    plan = json['plan'];
-    paymentMethod = json['paymentMethod'];
-    role = json['role'];
-    profilePicture = json['profilePicture'];
-    voucherExpiryDate = json['voucherExpiryDate'];
-    isLoggedIn = json['isLoggedIn'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    iV = json['__v'];
+    sId = json['_id'] ?? "";
+    name = json['name'] ?? "";
+    email = json['email'] ?? "";
+    password = json['password'] ?? "";
+    username = json['username'] ?? "";
+    phoneNumber = json['phoneNumber'] ?? "";
+    country = json['country'] ?? "";
+    plan = json['plan'] ?? "";
+    paymentMethod = json['paymentMethod'] ?? "";
+    role = json['role'] ?? "";
+    profilePicture = json['profilePicture'] ?? "";
+    voucherExpiryDate = json['voucherExpiryDate'] ?? "";
+    isLoggedIn = json['isLoggedIn'] ?? false;
+    createdAt = json['createdAt'] ?? "";
+    updatedAt = json['updatedAt'] ?? "";
+    iV = json['__v'] ?? 0;
   }
 }

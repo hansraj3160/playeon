@@ -11,7 +11,7 @@ class FeedbackScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: primaryColorB,
       appBar: AppBar(
-        backgroundColor: primaryColor1,
+        backgroundColor: primaryColorB,
         title: VariableText(
           text: "Feedback",
           fontcolor: primaryColorW,
@@ -25,6 +25,7 @@ class FeedbackScreen extends StatelessWidget {
             horizontal: size.width * horizontalPadding,
             vertical: size.height * verticalPadding),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
               height: size.height * 0.01,

@@ -7,6 +7,7 @@ import 'package:playeon/auth/user_model.dart';
 import 'package:playeon/dashboard/profile.dart';
 import 'package:playeon/dashboard/requestMovie/requestMovie.dart';
 import 'package:playeon/dashboard/searchscreen.dart';
+import 'package:playeon/dashboard/series.dart';
 import 'package:playeon/dashboard/show_all.dart';
 import 'package:playeon/models/movies_model.dart';
 import 'package:playeon/widgets/common.dart';
@@ -14,12 +15,14 @@ import 'package:playeon/widgets/style.dart';
 import 'package:provider/provider.dart';
 
 import '../auth/login_screen.dart';
+import '../models/series_model.dart';
 import '../models/user_model.dart';
 import '../provider/filter_movies.dart';
 import '../provider/user_provider.dart';
 import 'about.dart';
 import '../services/local_preference_controller.dart';
 import 'feedback/feedback.dart';
+import 'series_about.dart';
 
 List<String> itemImages = [
   "assets/images/img_c1.jpg",
@@ -53,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<MoviesModel> crimeList = [];
   List<MoviesModel> comediesList = [];
   List<MoviesModel> horror = [];
-
+  List<SeriesModel> moviesDat = [];
   List<MoviesModel> adv = [];
   List<MoviesModel> animat = [];
   List<MoviesModel> moviesData = [];
@@ -86,6 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    getSeriesData();
     getMovies();
     getCategories();
     sciFic();
@@ -96,6 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
     romance();
     dramas();
     comedries();
+
     super.initState();
   }
 
@@ -108,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // print(" form api $response");
     for (var item in response) {
       categories.add(MoviesModel.fromJson(item));
-      dynamic genre = item['genre'][0];
+      dynamic genre = item['genre'];
       if (genre is List<dynamic> && genre.isNotEmpty) {
         var m = genre;
 
@@ -220,6 +225,23 @@ class _HomeScreenState extends State<HomeScreen> {
     setLoading(false);
   }
 
+  getSeriesData() async {
+    var movies =
+        Provider.of<MoviesGenraProvider>(context, listen: false).seriesData;
+    if (movies.isEmpty) {
+      setLoading(true);
+      LocalPreference prefs = LocalPreference();
+      String token = await prefs.getUserToken();
+      var response = await ApiController().getSeries(token);
+      for (var item in response) {
+        moviesDat.add(SeriesModel.fromJson(item));
+      }
+      Provider.of<MoviesGenraProvider>(context, listen: false)
+          .setSeries(moviesDat);
+      setLoading(false);
+    }
+  }
+
   // final List<Widget> imageSliders =
   @override
   Widget build(BuildContext context) {
@@ -287,10 +309,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 CarouselSlider(
                   options: CarouselOptions(
-                      aspectRatio: 2.5,
+                      aspectRatio: 2.1,
                       autoPlay: true,
                       enlargeCenterPage: true,
-                      viewportFraction: 0.26,
+                      viewportFraction: 0.31,
                       enlargeFactor: 0.3),
                   items: List.generate(
                       itemImages.length,
@@ -979,6 +1001,85 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
                                           horror[index].imgSmPoster!,
+                                          fit: BoxFit.cover),
+                                    )),
+                              );
+                            }),
+                      )
+                    ],
+                  ),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: VariableText(
+                        text: "Series",
+                        fontcolor: primaryColorW,
+                        fontsize: size.height * 0.02,
+                        fontFamily: fontMedium,
+                        weight: FontWeight.w500,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () => Navigator.push(
+                          context,
+                          SwipeLeftAnimationRoute(
+                              milliseconds: 300, widget: Series())),
+                      child: Row(
+                        children: [
+                          VariableText(
+                            text: "See All",
+                            fontcolor: primaryColorW,
+                            fontsize: size.height * 0.016,
+                            fontFamily: fontMedium,
+                            weight: FontWeight.w500,
+                          ),
+                          const Icon(
+                            Icons.arrow_forward_ios,
+                            color: primaryColorW,
+                            size: 17,
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+
+                Container(
+                  width: size.width,
+                  height: size.height * 0.22,
+                  padding: EdgeInsets.symmetric(
+                      vertical: size.height * verticalPadding),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                            itemCount: moviesDat.length,
+                            shrinkWrap: false,
+                            scrollDirection: Axis.horizontal,
+                            physics: ScrollPhysics(),
+                            itemBuilder: (_, index) {
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      SwipeLeftAnimationRoute(
+                                          milliseconds: 200,
+                                          widget: SeriesAbout(
+                                            movieData: moviesDat[index],
+                                          )));
+                                },
+                                child: Container(
+                                    height: size.height * 0.1,
+                                    width: size.width * 0.24,
+                                    padding: EdgeInsets.only(left: 10),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(
+                                          moviesDat[index].imgSmPoster!,
                                           fit: BoxFit.cover),
                                     )),
                               );

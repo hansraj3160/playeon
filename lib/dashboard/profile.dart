@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:playeon/dashboard/feedback/feedback.dart';
+import 'package:playeon/dashboard/privacy_policy/privacy_policy.dart';
 import 'package:playeon/dashboard/requestMovie/requestMovie.dart';
 import 'package:playeon/dashboard/setting.dart';
 
@@ -235,28 +236,85 @@ class _ProfileState extends State<Profile> {
                           SizedBox(
                             height: 20,
                           ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: VariableText(
-                                  text: "Expire Date",
-                                  fontsize: size.height * 0.02,
-                                  fontFamily: fontMedium,
-                                  fontcolor: textColor1,
-                                  weight: FontWeight.w500,
-                                  max_lines: 2,
+                          InkWell(
+                            onTap: () {},
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: VariableText(
+                                    text: "Expire Date",
+                                    fontsize: size.height * 0.02,
+                                    fontFamily: fontMedium,
+                                    fontcolor: textColor1,
+                                    weight: FontWeight.w500,
+                                    max_lines: 2,
+                                  ),
                                 ),
-                              ),
-                              VariableText(
-                                text:
-                                    "${DateTime.parse(userdata.voucherExpiryDate!).toLocal().toIso8601String().split('T')[0]}",
-                                fontsize: size.height * 0.020,
-                                fontFamily: fontMedium,
-                                fontcolor: textColor1.withOpacity(0.8),
-                                weight: FontWeight.w500,
-                                max_lines: 2,
-                              ),
-                            ],
+                              ],
+                            ),
+                          ),
+
+                          SizedBox(
+                            height: 20,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  SwipeLeftAnimationRoute(
+                                      milliseconds: 200,
+                                      widget: PrivacyPolicyScreen(
+                                        heading: "Privacy & Policy",
+                                        url: "https://playeon.com/privacy",
+                                      )));
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: VariableText(
+                                    text: "Privacy & Policy",
+                                    fontsize: size.height * 0.02,
+                                    fontFamily: fontMedium,
+                                    fontcolor: textColor1,
+                                    weight: FontWeight.w500,
+                                    max_lines: 2,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  SwipeLeftAnimationRoute(
+                                      milliseconds: 200,
+                                      widget: PrivacyPolicyScreen(
+                                        heading:"Terms & Conditions",
+                                        url:
+                                            "https://playeon.com/terms&condtion",
+                                      )));
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: VariableText(
+                                    text: "Terms & Conditions",
+                                    fontsize: size.height * 0.02,
+                                    fontFamily: fontMedium,
+                                    fontcolor: textColor1,
+                                    weight: FontWeight.w500,
+                                    max_lines: 2,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
 
                           SizedBox(
